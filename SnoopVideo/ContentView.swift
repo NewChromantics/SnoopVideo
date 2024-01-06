@@ -20,7 +20,6 @@ struct ContentView: View
 		Label( documentUrl.absoluteString, systemImage: "bolt.fill")
 		Label( "Loading status; \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
 			.labelStyle(.titleAndIcon)
-		//TextEditor(text: documentUrl.absoluteString )
 		List
 		{
 			var strings = mp4Model.atomTree

@@ -13,6 +13,13 @@ struct PopMp4Error : LocalizedError
 	}
 }
 
+struct Mp4Meta: Decodable
+{
+	let Error: String?
+	let AtomTree : [String]?
+	let EndOfFile: Bool
+}
+
 //	based on public class CondenseStream
 public class PopMp4Instance
 {
@@ -24,36 +31,40 @@ public class PopMp4Instance
 	
 	init(Filename:String) throws
 	{
-		/*
-		self.Instance = PopMp4Decoder_AllocWithOption(Filename, "{}" )
+		//self.Instance = PopMp4Decoder_AllocWithOption(Filename, "{}" )
 		if ( self.Instance == 0 )
 		{
-		 throw PopMp4Error("Failed to allocate stream")
+			//throw PopMp4Error("Failed to allocate MP4 decoder for \(Filename)")
 		}
-		*/
 		print("Allocated instance \(self.Instance)")
 	}
 	
 	//	returns null when finished/eof
-	func WaitForMetaChange() async throws -> [String]?
+	func WaitForMetaChange() async -> Mp4Meta
 	{
 		//	gr: replace this will call to CAPI to get new meta
 		var SleepMs = 10
 		var SleepNano = (SleepMs * 1_000_000)
-		try await Task.sleep(nanoseconds: UInt64(SleepNano) )
-		
+		do
+		{
+			try await Task.sleep(nanoseconds: UInt64(SleepNano) )
+		}
+		catch let error as Error
+		{
+			return Mp4Meta( Error:error.localizedDescription, AtomTree:nil, EndOfFile:true )
+		}
 		AtomTreeCounter += 1
 		
 		//	send eof
 		if ( AtomTreeCounter >= 1000 )
 		{
-			return nil
+			return Mp4Meta( Error:nil, AtomTree:nil, EndOfFile:true )
 		}
 		
 		var NewAtom = "Atom #\(AtomTreeCounter)"
 		AtomTree.append(NewAtom)
 			
-		return AtomTree
+		return Mp4Meta( Error:nil, AtomTree:AtomTree, EndOfFile:false )
 	}
 			
 }
@@ -63,15 +74,16 @@ class Mp4ViewModel : ObservableObject
 {
 	enum LoadingStatus : CustomStringConvertible
 	{
-		case Init, Loading, Finished
+		case Init, Loading, Finished, Error
 
-		var description: String 
+		var description: String
 		{
 			switch self 
 			{
 				case .Init: return "Init"
 				case .Loading: return "Loading"
 				case .Finished: return "Finished"
+				case .Error: return "Error"
 			}
 		}
 	}
@@ -97,14 +109,27 @@ class Mp4ViewModel : ObservableObject
 		while ( true )
 		{
 			//	todo: return struct with error, tree, other meta
-			var NewTree = try await self.mp4Decoder!.WaitForMetaChange()
+			var NewMeta = try await self.mp4Decoder!.WaitForMetaChange()
+			
+			//	todo: do something with error
+			if ( NewMeta.Error != nil )
+			{
+				self.atomTree = [NewMeta.Error!]
+				self.loadingStatus = LoadingStatus.Error
+				return
+			}
+			
+			//	update data
+			if ( NewMeta.AtomTree != nil )
+			{
+				self.atomTree = NewMeta.AtomTree!
+			}
 			
 			//	eof
-			if ( NewTree == nil )
+			if ( NewMeta.EndOfFile )
 			{
 				break
 			}
-			self.atomTree = NewTree!
 		}
 		self.loadingStatus = LoadingStatus.Finished
 	}
