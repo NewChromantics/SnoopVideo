@@ -38,7 +38,7 @@ public class PopMp4Instance
 	func WaitForMetaChange() async throws -> [String]?
 	{
 		//	gr: replace this will call to CAPI to get new meta
-		var SleepMs = 1000
+		var SleepMs = 10
 		var SleepNano = (SleepMs * 1_000_000)
 		try await Task.sleep(nanoseconds: UInt64(SleepNano) )
 		
@@ -61,38 +61,51 @@ public class PopMp4Instance
 
 class Mp4ViewModel : ObservableObject
 {
-	enum LoadingStatus
+	enum LoadingStatus : CustomStringConvertible
 	{
 		case Init, Loading, Finished
+
+		var description: String 
+		{
+			switch self 
+			{
+				case .Init: return "Init"
+				case .Loading: return "Loading"
+				case .Finished: return "Finished"
+			}
+		}
 	}
-	@Published var AtomTree : [String]
-	@Published var LoadingState = LoadingStatus.Init
-	var Mp4Decoder : PopMp4Instance?
+
+
+	@Published var atomTree : [String]
+	@Published var loadingStatus = LoadingStatus.Init
+	var mp4Decoder : PopMp4Instance?
+	
 	
 	init()
 	{
-		self.Mp4Decoder = nil
-		self.AtomTree = ["Model's initial Tree"]
+		self.mp4Decoder = nil
+		self.atomTree = ["Model's initial Tree"]
 	}
 	
 	@MainActor // as we change published variables, we need to run on the main thread
 	func Load(filename: String) async throws
 	{
-		self.LoadingState = LoadingStatus.Loading
-		try self.Mp4Decoder = PopMp4Instance(Filename: filename)
+		self.loadingStatus = LoadingStatus.Loading
+		try self.mp4Decoder = PopMp4Instance(Filename: filename)
 		
 		while ( true )
 		{
 			//	todo: return struct with error, tree, other meta
-			var NewTree = try await self.Mp4Decoder!.WaitForMetaChange()
+			var NewTree = try await self.mp4Decoder!.WaitForMetaChange()
 			
 			//	eof
 			if ( NewTree == nil )
 			{
 				break
 			}
-			AtomTree = NewTree!
+			self.atomTree = NewTree!
 		}
-		self.LoadingState = LoadingStatus.Finished
+		self.loadingStatus = LoadingStatus.Finished
 	}
 }
