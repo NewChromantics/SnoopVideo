@@ -19,13 +19,6 @@ extension UTType {
 
 struct SnoopVideoDocument: FileDocument 
 {
-	var text: String
-
-	init(text: String = "Snoop!") 
-	{
-		self.text = text
-	}
-
 	static var readableContentTypes: [UTType]
 	{
 		[
@@ -36,20 +29,32 @@ struct SnoopVideoDocument: FileDocument
 		]
 	}
 
+	init()
+	{
+	}
 	
-	init(configuration: ReadConfiguration) throws {
-		guard let data = configuration.file.regularFileContents,
-			  let string = String(data: data, encoding: .utf8)
-		else {
+	init(configuration: ReadConfiguration) throws 
+	{
+		do
+		{
+			let fileContents = configuration.file.regularFileContents
+			if ( fileContents == nil )
+			{
+				throw CocoaError(.fileReadUnknown)
+			}
+			let fileContentsString = String(data: fileContents!, encoding: .utf8)
+		}
+		catch
+		{
 			throw CocoaError(.fileReadCorruptFile)
 		}
-		text = string
 	}
-	
-	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-		let data = text.data(using: .utf8)!
-		return .init(regularFileWithContents: data)
+
+	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper 
+	{
+		//let data = text.data(using: .utf8)!
+		//return .init(regularFileWithContents: data)
+		throw CocoaError(.fileWriteUnknown)
 	}
-	 
 }
 
