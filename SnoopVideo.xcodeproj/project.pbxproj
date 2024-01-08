@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF4366142B49B2DE00009182 /* PopMp4.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4366132B49B2DE00009182 /* PopMp4.swift */; };
+		BF5EF7942B4B4241002AE6FB /* PopMp4 in Frameworks */ = {isa = PBXBuildFile; productRef = BF5EF7932B4B4241002AE6FB /* PopMp4 */; };
 		BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */; };
 		BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */; };
 		BF79FA382B44A1BD00914CB0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA372B44A1BD00914CB0 /* ContentView.swift */; };
@@ -16,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF4366132B49B2DE00009182 /* PopMp4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopMp4.swift; sourceTree = "<group>"; };
 		BF79FA302B44A1BD00914CB0 /* SnoopVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnoopVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoApp.swift; sourceTree = "<group>"; };
 		BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoDocument.swift; sourceTree = "<group>"; };
@@ -32,17 +31,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF5EF7942B4B4241002AE6FB /* PopMp4 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF5EF7902B4B39FB002AE6FB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BF79FA272B44A1BD00914CB0 = {
 			isa = PBXGroup;
 			children = (
 				BF79FA322B44A1BD00914CB0 /* SnoopVideo */,
 				BF79FA312B44A1BD00914CB0 /* Products */,
+				BF5EF7902B4B39FB002AE6FB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,7 +65,6 @@
 		BF79FA322B44A1BD00914CB0 /* SnoopVideo */ = {
 			isa = PBXGroup;
 			children = (
-				BF4366132B49B2DE00009182 /* PopMp4.swift */,
 				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
 				BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */,
 				BF79FA372B44A1BD00914CB0 /* ContentView.swift */,
@@ -93,6 +100,9 @@
 			dependencies = (
 			);
 			name = SnoopVideo;
+			packageProductDependencies = (
+				BF5EF7932B4B4241002AE6FB /* PopMp4 */,
+			);
 			productName = SnoopVideo;
 			productReference = BF79FA302B44A1BD00914CB0 /* SnoopVideo.app */;
 			productType = "com.apple.product-type.application";
@@ -105,7 +115,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					BF79FA2F2B44A1BD00914CB0 = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -121,6 +131,9 @@
 				Base,
 			);
 			mainGroup = BF79FA272B44A1BD00914CB0;
+			packageReferences = (
+				BF4366492B4B115300009182 /* XCLocalSwiftPackageReference "../PopMp4/PopMp4.SwiftPackage" */,
+			);
 			productRefGroup = BF79FA312B44A1BD00914CB0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -150,7 +163,6 @@
 				BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */,
 				BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */,
 				BF79FA382B44A1BD00914CB0 /* ContentView.swift in Sources */,
-				BF4366142B49B2DE00009182 /* PopMp4.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +387,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		BF4366492B4B115300009182 /* XCLocalSwiftPackageReference "../PopMp4/PopMp4.SwiftPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../PopMp4/PopMp4.SwiftPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BF5EF7932B4B4241002AE6FB /* PopMp4 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF4366492B4B115300009182 /* XCLocalSwiftPackageReference "../PopMp4/PopMp4.SwiftPackage" */;
+			productName = PopMp4;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BF79FA282B44A1BD00914CB0 /* Project object */;
 }
