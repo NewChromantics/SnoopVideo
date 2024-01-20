@@ -18,9 +18,13 @@ struct ContentView: View
 
 	var body: some View 
 	{
-		Label( documentUrl.absoluteString, systemImage: "bolt.fill")
-		Label( "Loading status; \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
-			.labelStyle(.titleAndIcon)
+		Label( "\(documentUrl.absoluteString) \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
+		
+		if let error = self.mp4Model.error
+		{
+			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
+		}
+		
 		List
 		{
 			var strings = mp4Model.atomTree
