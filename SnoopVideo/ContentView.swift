@@ -46,7 +46,7 @@ struct ContentView: View
 		{
 			Task
 			{
-				try await mp4Model.Load(filename:"")
+				try await mp4Model.Load(filename:documentUrl.absoluteString)
 			}
 		}
 	}
