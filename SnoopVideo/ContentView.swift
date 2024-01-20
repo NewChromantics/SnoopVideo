@@ -19,10 +19,17 @@ struct ContentView: View
 	var body: some View 
 	{
 		Label( "\(documentUrl.absoluteString) \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
+			.padding(.all, 6.0)
 		
 		if let error = self.mp4Model.error
 		{
 			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
+				.padding(.all, 8.0)
+				.background(.red)
+				.foregroundColor(.white)
+				.clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+				
+				
 		}
 		
 		List
