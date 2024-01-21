@@ -20,7 +20,9 @@ struct ContentView: View
 	{
 		Label( "\(documentUrl.absoluteString) \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
 			.padding(.all, 6.0)
-		
+		Label( self.mp4Model.lastMeta.debug, systemImage: "info.bubble.fill")
+			.padding(.all, 6.0)
+
 		if let error = self.mp4Model.error
 		{
 			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
@@ -34,13 +36,13 @@ struct ContentView: View
 		
 		List
 		{
-			var strings = mp4Model.atomTree
+			var strings = mp4Model.lastMeta.RootAtoms ?? []
 			ForEach(strings, id:\.self)
 			{
 				string in
 				DisclosureGroup(string)
 				{
-					Label("Hello!",image:"")
+					Label("Hello!",image:"questionmark.square.fill")
 				}
 			}
 		}
