@@ -42,7 +42,7 @@ struct ContentView: View
 				string in
 				DisclosureGroup(string)
 				{
-					Label("Hello!",image:"questionmark.square.fill")
+					Label("Hello!",systemImage:"questionmark.square.fill")
 				}
 			}
 		}
@@ -60,7 +60,6 @@ struct ContentView: View
 #Preview 
 {
 	//ContentView(documentUrl: .constant(SnoopVideoDocument()))
-	//ContentView(documentUrl: URL(string:"Preview.mp4")! )
 	ContentView(documentUrl: URL(string:"/Volumes/Code/PopMp4/TestData/Test.mp4")! )
 }
 
