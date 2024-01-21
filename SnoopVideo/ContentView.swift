@@ -9,19 +9,86 @@ import SwiftUI
 import PopMp4
 
 
+struct AtomView: View, Hashable
+{
+	static func == (lhs: AtomView, rhs: AtomView) -> Bool
+	{
+		//lhs.atom.Fourcc == rhs.atom.Fourcc
+		//lhs.atom.id == rhs.atom.id
+		lhs.atom == rhs.atom
+	}
+
+	
+	var atom : AtomMeta
+	//	makes this non hashable :/ so root needs a map of expanded items?
+	//@State var isExpanded: Bool
+	
+	
+	var body: some View
+	{
+		DisclosureGroup()
+		{
+			//Label("Fourcc \(atom.Fourcc)", systemImage:"questionmark.square.fill")
+			Label("Atom Size \(atom.AtomSizeBytes) bytes", systemImage:"questionmark.square.fill")
+			HStack
+			{
+				Label("Header Size \(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
+				Label("Content Size \(atom.ContentSizeBytes/1024)KB", systemImage:"questionmark.square.fill")
+			}
+			//Label("Content file offset\(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
+			
+			
+			if let children = self.atom.Children
+			{
+				ForEach(children)
+				{
+					//Label("child", systemImage:"questionmark.square.fill")
+					child in
+					AtomView( atom:child )
+				}
+			}
+		}
+		label:
+		{
+			HStack
+			{
+				Label("\(atom.Fourcc)", systemImage: "atom")
+				Spacer()
+			}
+		}
+			/*stops selection and only applies to label
+			 .onTapGesture(count:2)
+			 {
+			 print("on double tap \(atom.Fourcc)")
+			 //isExpanded = !isExpanded
+			 }
+			 */
+		
+	}
+}
+
 //	mp4 file view
 struct ContentView: View
 {
 	@StateObject var mp4Model = Mp4ViewModel()
 	//@Binding var document: SnoopVideoDocument
 	var documentUrl : URL
-
-	var body: some View 
+	@State var selectedAtom: UUID?
+	//@State var isExpanded : Bool[
+	
+	var body: some View
 	{
 		Label( "\(documentUrl.absoluteString) \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
 			.padding(.all, 6.0)
 		Label( self.mp4Model.lastMeta.debug, systemImage: "info.bubble.fill")
 			.padding(.all, 6.0)
+			.onAppear
+			{
+				Task
+				{
+					try await mp4Model.Load(filename:documentUrl.absoluteString)
+				}
+			}
 
 		if let error = self.mp4Model.error
 		{
@@ -34,26 +101,24 @@ struct ContentView: View
 				
 		}
 		
-		List
+		List(selection:$selectedAtom)
 		{
-			var strings = mp4Model.lastMeta.RootAtoms ?? []
-			ForEach(strings, id:\.self)
+			ForEach(mp4Model.lastMeta.AtomTree ?? [])
 			{
-				string in
-				DisclosureGroup(string)
+				atom in
+				AtomView( atom:atom )
+					//.background(.cyan)
+					//.frame(maxWidth: .infinity, alignment: .leading)
+					.contentShape(Rectangle())
+				/* this stops selection working
+					.onTapGesture(count:2)
 				{
-					Label("Hello!",systemImage:"questionmark.square.fill")
+					print("double click atom")
 				}
+				*/
 			}
 		}
-		//.task{}
-		.onAppear
-		{
-			Task
-			{
-				try await mp4Model.Load(filename:documentUrl.absoluteString)
-			}
-		}
+		
 	}
 }
 
@@ -61,5 +126,6 @@ struct ContentView: View
 {
 	//ContentView(documentUrl: .constant(SnoopVideoDocument()))
 	ContentView(documentUrl: URL(string:"/Volumes/Code/PopMp4/TestData/Test.mp4")! )
+	
 }
 
