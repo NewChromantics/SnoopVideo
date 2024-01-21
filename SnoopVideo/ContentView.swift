@@ -38,7 +38,10 @@ struct ContentView: View
 			ForEach(strings, id:\.self)
 			{
 				string in
-						Text(string)
+				DisclosureGroup(string)
+				{
+					Label("Hello!",image:"")
+				}
 			}
 		}
 		//.task{}
@@ -55,6 +58,7 @@ struct ContentView: View
 #Preview 
 {
 	//ContentView(documentUrl: .constant(SnoopVideoDocument()))
-	ContentView(documentUrl: URL(string:"Preview.mp4")! )
+	//ContentView(documentUrl: URL(string:"Preview.mp4")! )
+	ContentView(documentUrl: URL(string:"/Volumes/Code/PopMp4/TestData/Test.mp4")! )
 }
 
