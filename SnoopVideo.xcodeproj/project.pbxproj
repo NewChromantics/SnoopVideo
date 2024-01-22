@@ -25,6 +25,7 @@
 		BF79FA3C2B44A1BE00914CB0 /* SnoopVideo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SnoopVideo.entitlements; sourceTree = "<group>"; };
 		BF79FA3E2B44A1BE00914CB0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BF843DF52B5D8E9500247665 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
+		BF843DFB2B5F21D800247665 /* App.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +67,7 @@
 		BF79FA322B44A1BD00914CB0 /* SnoopVideo */ = {
 			isa = PBXGroup;
 			children = (
+				BF843DFB2B5F21D800247665 /* App.xcconfig */,
 				BF843DF52B5D8E9500247665 /* Version.xcconfig */,
 				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
 				BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */,
@@ -173,7 +175,7 @@
 /* Begin XCBuildConfiguration section */
 		BF79FA402B44A1BE00914CB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF843DF52B5D8E9500247665 /* Version.xcconfig */;
+			baseConfigurationReference = BF843DFB2B5F21D800247665 /* App.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -235,7 +237,7 @@
 		};
 		BF79FA412B44A1BE00914CB0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF843DF52B5D8E9500247665 /* Version.xcconfig */;
+			baseConfigurationReference = BF843DFB2B5F21D800247665 /* App.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -313,12 +315,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.newchromantics.snoopvideo.SnoopVideo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -353,12 +351,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.newchromantics.snoopvideo.SnoopVideo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
