@@ -38,7 +38,7 @@ struct AtomView: View, Hashable
 			//Label("Content file offset\(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
 			
 			
-			if let children = self.atom.Children
+			if let children = atom.Children
 			{
 				ForEach(children)
 				{
@@ -78,9 +78,14 @@ struct ContentView: View
 	
 	var body: some View
 	{
-		Label( "\(documentUrl.absoluteString) \(self.mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
+		let Instance = mp4Model.lastMeta.Instance ?? -1
+		let BytesParsed = mp4Model.lastMeta.Mp4BytesParsed ?? 0
+		let MbParsed = Double(String(format: "%.2f", Double(BytesParsed)/1024.0/1024.0))!
+		let debug = "Parsed \(MbParsed) MB (Instance \(Instance))"
+		
+		Label( "\(documentUrl.absoluteString) \(mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
 			.padding(.all, 6.0)
-		Label( self.mp4Model.lastMeta.debug, systemImage: "info.bubble.fill")
+		Label( debug, systemImage: "info.bubble.fill")
 			.padding(.all, 6.0)
 			.onAppear
 			{
@@ -90,7 +95,7 @@ struct ContentView: View
 				}
 			}
 
-		if let error = self.mp4Model.error
+		if let error = mp4Model.error
 		{
 			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
 				.padding(.all, 8.0)
