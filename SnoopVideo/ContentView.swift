@@ -30,10 +30,13 @@ struct AtomView: View, Hashable
 		{
 			//Label("Fourcc \(atom.Fourcc)", systemImage:"questionmark.square.fill")
 			Label("Atom Size \(atom.AtomSizeBytes) bytes", systemImage:"questionmark.square.fill")
+				.textSelection(.enabled)
 			HStack
 			{
 				Label("Header Size \(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
+					.textSelection(.enabled)
 				Label("Content Size \(atom.ContentSizeBytes/1024)KB", systemImage:"questionmark.square.fill")
+					.textSelection(.enabled)
 			}
 			//Label("Content file offset\(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
 			
@@ -53,6 +56,7 @@ struct AtomView: View, Hashable
 			HStack
 			{
 				Label("\(atom.Fourcc)", systemImage: "atom")
+					.textSelection(.enabled)
 				Spacer()
 			}
 		}
@@ -85,7 +89,10 @@ struct ContentView: View
 		
 		Label( "\(documentUrl.absoluteString) \(mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
 			.padding(.all, 6.0)
+			.textSelection(.enabled)
+
 		Label( debug, systemImage: "info.bubble.fill")
+			.textSelection(.enabled)
 			.padding(.all, 6.0)
 			.onAppear
 			{
@@ -98,6 +105,7 @@ struct ContentView: View
 		if let error = mp4Model.error
 		{
 			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
+				.textSelection(.enabled)
 				.padding(.all, 8.0)
 				.background(.red)
 				.foregroundColor(.white)
