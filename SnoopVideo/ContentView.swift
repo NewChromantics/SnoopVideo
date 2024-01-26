@@ -8,6 +8,24 @@
 import SwiftUI
 import PopMp4
 
+func FormatDataSize(Bytes:Int) -> String
+{
+	if ( Bytes < 1024 )
+	{
+		return "\(Bytes) bytes"
+	}
+	
+	let MegaByte = 1024 * 1024;
+	if ( Bytes < MegaByte )
+	{
+		let Kb = String(format: "%.2f", Double(Bytes)/1024.0)
+		return "\(Kb) KB"
+	}
+	
+	let Mb = String(format: "%.2f", Double(Bytes)/Double(MegaByte))
+	return "\(Mb) MB"
+}
+
 
 struct AtomView: View, Hashable
 {
@@ -23,19 +41,20 @@ struct AtomView: View, Hashable
 	//	makes this non hashable :/ so root needs a map of expanded items?
 	//@State var isExpanded: Bool
 	
+
 	
 	var body: some View
 	{
 		DisclosureGroup()
 		{
 			//Label("Fourcc \(atom.Fourcc)", systemImage:"questionmark.square.fill")
-			Label("Atom Size \(atom.AtomSizeBytes) bytes", systemImage:"questionmark.square.fill")
+			Label("Atom Size \(FormatDataSize(Bytes: atom.AtomSizeBytes))", systemImage:"questionmark.square.fill")
 				.textSelection(.enabled)
 			HStack
 			{
-				Label("Header Size \(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
+				Label("Header Size \(FormatDataSize(Bytes: atom.HeaderSizeBytes))", systemImage:"questionmark.square.fill")
 					.textSelection(.enabled)
-				Label("Content Size \(atom.ContentSizeBytes/1024)KB", systemImage:"questionmark.square.fill")
+				Label("Content Size \(FormatDataSize(Bytes: atom.ContentSizeBytes))", systemImage:"questionmark.square.fill")
 					.textSelection(.enabled)
 			}
 			//Label("Content file offset\(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
@@ -83,9 +102,8 @@ struct ContentView: View
 	var body: some View
 	{
 		let Instance = mp4Model.lastMeta.Instance ?? -1
-		let BytesParsed = mp4Model.lastMeta.Mp4BytesParsed ?? 0
-		let MbParsed = Double(String(format: "%.2f", Double(BytesParsed)/1024.0/1024.0))!
-		let debug = "Parsed \(MbParsed) MB (Instance \(Instance))"
+		let BytesParsed = FormatDataSize( Bytes: mp4Model.lastMeta.Mp4BytesParsed ?? 0 )
+		let debug = "Parsed \(BytesParsed) (Instance \(Instance))"
 		
 		Label( "\(documentUrl.absoluteString) \(mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
 			.padding(.all, 6.0)
