@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BF5EF7942B4B4241002AE6FB /* PopMp4 in Frameworks */ = {isa = PBXBuildFile; productRef = BF5EF7932B4B4241002AE6FB /* PopMp4 */; };
+		BF6453692B656B7A00861D82 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6453672B656B7A00861D82 /* TrackView.swift */; };
+		BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6453682B656B7A00861D82 /* AtomView.swift */; };
 		BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */; };
 		BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */; };
 		BF79FA382B44A1BD00914CB0 /* Mp4InstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */; };
@@ -16,7 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF6453662B647AC800861D82 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; path = App; sourceTree = "<group>"; };
+		BF6453662B647AC800861D82 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
+		BF6453672B656B7A00861D82 /* TrackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
+		BF6453682B656B7A00861D82 /* AtomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomView.swift; sourceTree = "<group>"; };
 		BF79FA302B44A1BD00914CB0 /* SnoopVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnoopVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoApp.swift; sourceTree = "<group>"; };
 		BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoDocument.swift; sourceTree = "<group>"; };
@@ -48,11 +52,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BF64536C2B656BAA00861D82 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				BF6453682B656B7A00861D82 /* AtomView.swift */,
+				BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */,
+				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
+				BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */,
+				BF6453672B656B7A00861D82 /* TrackView.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		BF64536D2B656BE300861D82 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BF6453662B647AC800861D82 /* Icons */,
+				BF843DFB2B5F21D800247665 /* App.xcconfig */,
+				BF79FA392B44A1BE00914CB0 /* Assets.xcassets */,
+				BF79FA3B2B44A1BE00914CB0 /* Info.plist */,
+				BF79FA3D2B44A1BE00914CB0 /* PreviewContent */,
+				BF79FA3C2B44A1BE00914CB0 /* SnoopVideo.entitlements */,
+				BF843DF52B5D8E9500247665 /* Version.xcconfig */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		BF79FA272B44A1BD00914CB0 = {
 			isa = PBXGroup;
 			children = (
-				BF6453662B647AC800861D82 /* App */,
-				BF79FA322B44A1BD00914CB0 /* SnoopVideo */,
+				BF64536D2B656BE300861D82 /* App */,
+				BF64536C2B656BAA00861D82 /* Source */,
 				BF79FA312B44A1BD00914CB0 /* Products */,
 				BF5EF7902B4B39FB002AE6FB /* Frameworks */,
 			);
@@ -66,28 +96,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BF79FA322B44A1BD00914CB0 /* SnoopVideo */ = {
-			isa = PBXGroup;
-			children = (
-				BF843DFB2B5F21D800247665 /* App.xcconfig */,
-				BF843DF52B5D8E9500247665 /* Version.xcconfig */,
-				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
-				BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */,
-				BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */,
-				BF79FA392B44A1BE00914CB0 /* Assets.xcassets */,
-				BF79FA3B2B44A1BE00914CB0 /* Info.plist */,
-				BF79FA3C2B44A1BE00914CB0 /* SnoopVideo.entitlements */,
-				BF79FA3D2B44A1BE00914CB0 /* Preview Content */,
-			);
-			path = SnoopVideo;
-			sourceTree = "<group>";
-		};
-		BF79FA3D2B44A1BE00914CB0 /* Preview Content */ = {
+		BF79FA3D2B44A1BE00914CB0 /* PreviewContent */ = {
 			isa = PBXGroup;
 			children = (
 				BF79FA3E2B44A1BE00914CB0 /* Preview Assets.xcassets */,
 			);
-			path = "Preview Content";
+			path = PreviewContent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +181,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */,
+				BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */,
 				BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */,
+				BF6453692B656B7A00861D82 /* TrackView.swift in Sources */,
 				BF79FA382B44A1BD00914CB0 /* Mp4InstanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,14 +320,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = SnoopVideo/SnoopVideo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = App/SnoopVideo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"SnoopVideo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = App/PreviewContent;
 				DEVELOPMENT_TEAM = X52DR36JY2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SnoopVideo/Info.plist;
+				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
@@ -346,14 +362,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = SnoopVideo/SnoopVideo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = App/SnoopVideo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"SnoopVideo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = App/PreviewContent;
 				DEVELOPMENT_TEAM = X52DR36JY2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SnoopVideo/Info.plist;
+				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
