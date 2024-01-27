@@ -10,7 +10,7 @@
 		BF5EF7942B4B4241002AE6FB /* PopMp4 in Frameworks */ = {isa = PBXBuildFile; productRef = BF5EF7932B4B4241002AE6FB /* PopMp4 */; };
 		BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */; };
 		BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */; };
-		BF79FA382B44A1BD00914CB0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA372B44A1BD00914CB0 /* ContentView.swift */; };
+		BF79FA382B44A1BD00914CB0 /* Mp4InstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */; };
 		BF79FA3A2B44A1BE00914CB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF79FA392B44A1BE00914CB0 /* Assets.xcassets */; };
 		BF79FA3F2B44A1BE00914CB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF79FA3E2B44A1BE00914CB0 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -20,7 +20,7 @@
 		BF79FA302B44A1BD00914CB0 /* SnoopVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnoopVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoApp.swift; sourceTree = "<group>"; };
 		BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoDocument.swift; sourceTree = "<group>"; };
-		BF79FA372B44A1BD00914CB0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mp4InstanceView.swift; sourceTree = "<group>"; };
 		BF79FA392B44A1BE00914CB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF79FA3B2B44A1BE00914CB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF79FA3C2B44A1BE00914CB0 /* SnoopVideo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SnoopVideo.entitlements; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 				BF843DF52B5D8E9500247665 /* Version.xcconfig */,
 				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
 				BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */,
-				BF79FA372B44A1BD00914CB0 /* ContentView.swift */,
+				BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */,
 				BF79FA392B44A1BE00914CB0 /* Assets.xcassets */,
 				BF79FA3B2B44A1BE00914CB0 /* Info.plist */,
 				BF79FA3C2B44A1BE00914CB0 /* SnoopVideo.entitlements */,
@@ -168,7 +168,7 @@
 			files = (
 				BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */,
 				BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */,
-				BF79FA382B44A1BD00914CB0 /* ContentView.swift in Sources */,
+				BF79FA382B44A1BD00914CB0 /* Mp4InstanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -90,8 +90,9 @@ struct AtomView: View, Hashable
 	}
 }
 
-//	mp4 file view
-struct ContentView: View
+
+//	render an mp4 instance's state & data
+struct Mp4InstanceView: View
 {
 	@StateObject var mp4Model = Mp4ViewModel()
 	//@Binding var document: SnoopVideoDocument
@@ -155,8 +156,8 @@ struct ContentView: View
 
 #Preview 
 {
-	//ContentView(documentUrl: .constant(SnoopVideoDocument()))
-	ContentView(documentUrl: URL(string:"/Volumes/Code/PopMp4/TestData/Test.mp4")! )
+	//Mp4InstanceView(documentUrl: .constant(SnoopVideoDocument()))
+	Mp4InstanceView(documentUrl: URL(string:"/Volumes/Code/PopMp4/TestData/Test.mp4")! )
 	
 }
 

@@ -16,7 +16,7 @@ struct SnoopVideoApp: App
 		DocumentGroup(viewing: SnoopVideoDocument.self)
 		{
 			file in
-			ContentView(documentUrl: (file.fileURL ?? DefaultUrl)! )
+			Mp4InstanceView(documentUrl: (file.fileURL ?? DefaultUrl)! )
 		}
 		/*
 		DocumentGroup(newDocument: SnoopVideoDocument())
