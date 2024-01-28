@@ -1,6 +1,35 @@
 import SwiftUI
 import PopMp4
 
+extension Double {
+	 var int: Int {
+		 get { Int(self) }
+		 set { self = Double(int) }
+	 }
+ }
+
+public extension Binding {
+
+	static func convert<TInt, TFloat>(from intBinding: Binding<TInt>) -> Binding<TFloat>
+	where TInt:   BinaryInteger,
+		  TFloat: BinaryFloatingPoint{
+
+		Binding<TFloat> (
+			get: { TFloat(intBinding.wrappedValue) },
+			set: { intBinding.wrappedValue = TInt($0) }
+		)
+	}
+
+	static func convert<TFloat, TInt>(from floatBinding: Binding<TFloat>) -> Binding<TInt>
+	where TFloat: BinaryFloatingPoint,
+		  TInt:   BinaryInteger {
+
+		Binding<TInt> (
+			get: { TInt(floatBinding.wrappedValue) },
+			set: { floatBinding.wrappedValue = TFloat($0) }
+		)
+	}
+}
 
 //	render an mp4 instance's state & data
 struct Mp4InstanceView: View
@@ -10,8 +39,18 @@ struct Mp4InstanceView: View
 	var documentUrl : URL
 	@State var selectedAtom: UUID?
 	@State var selectedTrack: UUID?
+	@State var sharedScrollX : Int=1
 	//@State var isExpanded : Bool[
 	
+	func GetTimelineMin() -> Int
+	{
+		return 0
+	}
+	func GetTimelineMax() -> Int
+	{
+		return 1000
+	}
+
 	var body: some View
 	{
 		let Instance = mp4Model.lastMeta.Instance ?? -1
@@ -65,12 +104,23 @@ struct Mp4InstanceView: View
 				}
 			}
 			
+			Slider(		value: .convert(from:$sharedScrollX),
+						in: 0...100,
+						onEditingChanged: { editing in
+							//isEditing = editing
+						}
+					)
+			.onChange(of: sharedScrollX)
+			{
+				print("slider on change \(sharedScrollX)")
+			}
+			
 			List(selection:$selectedTrack)
 			{
 				ForEach(mp4Model.lastMeta.tracks)
 				{
 					track in
-					TrackView( track:track )
+					TrackView( track:track, ScrollX: $sharedScrollX )
 						.contentShape(Rectangle())
 				}
 			}
