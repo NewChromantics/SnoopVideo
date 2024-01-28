@@ -104,15 +104,23 @@ struct Mp4InstanceView: View
 				}
 			}
 			
-			Slider(		value: .convert(from:$sharedScrollX),
-						in: 0...100,
-						onEditingChanged: { editing in
-							//isEditing = editing
-						}
-					)
-			.onChange(of: sharedScrollX)
+			HStack
 			{
-				print("slider on change \(sharedScrollX)")
+				Label("\(sharedScrollX)ms", systemImage: "clock.fill")
+					.frame(minWidth: 30, alignment:.leading)
+					.padding(.all, 6.0)
+					.textSelection(.enabled)
+
+				Slider(		value: .convert(from:$sharedScrollX),
+							in: 0...100,
+							onEditingChanged: { editing in
+					//isEditing = editing
+				}
+				)
+				.onChange(of: sharedScrollX)
+				{
+					print("slider on change \(sharedScrollX)")
+				}
 			}
 			
 			List(selection:$selectedTrack)

@@ -11,12 +11,11 @@ extension SKView {
 
 class GameScene: SKScene, ObservableObject
 {
+	//	temp vars whilst dragging for solid delta
 	var dragStartScreenx : Int?
 	var dragStartAnchorX : CGFloat?
-	//@Binding var ScrollX : CGFloat=0.0
-	//var ScrollX : Binding<Int>
-	@Published var ScrollX : Int = 0
-	@State var dirty = true
+	
+	@Published var ScrollX : Int = 0	//	outgoing change
 	
 	override init(size: CGSize/*,scrollBinding:Binding<Int>*/)
 	{
@@ -87,13 +86,16 @@ class GameScene: SKScene, ObservableObject
 		let ScreenDeltax = Int(mousePosition.x) - dragStartScreenx!
 		let AnchorDelta = CGFloat(ScreenDeltax) / frame.width
 		//print("ScreenDeltax \(ScreenDeltax) AnchorDelta \(AnchorDelta)")
-		let NewAnchor = dragStartAnchorX! + (AnchorDelta)
+		var NewAnchor = dragStartAnchorX! + (AnchorDelta)
+		var NewScroll = AnchorToScroll(anchor: NewAnchor)
 		
-		//	todo: snap anchor to pixel
+		//	snap anchor to pixel
+		NewAnchor = ScrollToAnchor(scroll:NewScroll)
+		
 		anchorPoint.x = NewAnchor
 		//dragStartScreenx = Int(mousePosition.x)
 		//dragStartAnchorX = anchorPoint.x
-		ScrollX = AnchorToScroll(anchor: NewAnchor)
+		ScrollX = NewScroll
 	}
 
 	
@@ -162,6 +164,7 @@ struct DataTimelineView<TrackLabel:View>: View
 			scene.scaleMode = .resizeFill
 			//scene.PlotPositions(Times:initialPlotTimes)
 			//scene.SetScrollX(scroll: ScrollX)
+		
 			return scene
 		}()
 
@@ -180,7 +183,7 @@ struct DataTimelineView<TrackLabel:View>: View
 				//let Height = geometry.size.height/2
 				let Width = geometry.size.width
 				//scene.size = CGSize(width: Width, height:Height)
-				SpriteView(scene: scene, debugOptions: [.showsFPS, .showsNodeCount, .showsPhysics] )
+				SpriteView(scene: scene, debugOptions: [/*.showsFPS, .showsNodeCount, .showsPhysics*/] )
 					.frame(width: Width, height:Height)
 					.ignoresSafeArea()
 					.onAppear()
@@ -190,9 +193,14 @@ struct DataTimelineView<TrackLabel:View>: View
 					.onChange(of: ScrollX)
 					{
 						value in
-						
-							print("ScrollX changed value=\(value) ScrollX=\(ScrollX)")
-							scene.SetScrollX(scroll: value)
+						print("ScrollX changed from above value=\(value) ScrollX=\(ScrollX)")
+						scene.SetScrollX(scroll: value)
+					}
+					.onChange(of: scene.ScrollX)
+					{
+						value in
+						print("scene changed")
+						ScrollX = value
 					}
 			}
 		}

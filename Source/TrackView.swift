@@ -43,7 +43,7 @@ struct TrackView: View//, Hashable
 	{
 		DataTimelineView(height:TrackHeight, initialPlotTimes: track.SampleDecodeTimes, ScrollX:$ScrollX)
 		{
-			GetTrackLabel(Extra: "ScrollX \(ScrollX)")
+			GetTrackLabel()
 				.textSelection(.enabled)
 				.frame(width: 120,alignment: .leading)
 		}
