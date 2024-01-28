@@ -45,35 +45,36 @@ struct Mp4InstanceView: View
 				
 		}
 		
-		List(selection:$selectedAtom)
+		VSplitView()
 		{
-			ForEach(mp4Model.lastMeta.AtomTree ?? [])
+			List(selection:$selectedAtom)
 			{
-				atom in
-				AtomView( atom:atom )
+				ForEach(mp4Model.lastMeta.AtomTree ?? [])
+				{
+					atom in
+					AtomView( atom:atom )
 					//.background(.cyan)
 					//.frame(maxWidth: .infinity, alignment: .leading)
-					.contentShape(Rectangle())
-				/* this stops selection working
-					.onTapGesture(count:2)
-				{
-					print("double click atom")
+						.contentShape(Rectangle())
+					/* this stops selection working
+					 .onTapGesture(count:2)
+					 {
+					 print("double click atom")
+					 }
+					 */
 				}
-				*/
 			}
-		}
-		
-		/*
-		List(selection:$selectedTrack)
-		{
-			ForEach(mp4Model.lastMeta.tracks)
+			
+			List(selection:$selectedTrack)
 			{
-				track in
-				TrackView( track:track )
-					.contentShape(Rectangle())
+				ForEach(mp4Model.lastMeta.tracks)
+				{
+					track in
+					TrackView( track:track )
+						.contentShape(Rectangle())
+				}
 			}
 		}
-		 */
 	}
 }
 
@@ -81,6 +82,5 @@ struct Mp4InstanceView: View
 {
 	//Mp4InstanceView(documentUrl: .constant(SnoopVideoDocument()))
 	Mp4InstanceView(documentUrl: URL(string:"/Volumes/Code/PopMp4/TestData/Test.mp4")! )
-	
 }
 
