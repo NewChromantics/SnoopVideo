@@ -40,6 +40,7 @@ struct Mp4InstanceView: View
 	@State var selectedAtom: UUID?
 	@State var selectedTrack: UUID?
 	@State var sharedScrollX : Int=1
+	@State var fourccFilter: String=""
 	//@State var isExpanded : Bool[
 	
 	func GetTimelineMin() -> Int
@@ -86,21 +87,40 @@ struct Mp4InstanceView: View
 		
 		VSplitView()
 		{
-			List(selection:$selectedAtom)
+			VStack
 			{
-				ForEach(fileDecoder.lastMeta.AtomTree ?? [])
+				/* not currently redrawing list
+				HStack
 				{
-					atom in
-					AtomView( atom:atom )
-					//.background(.cyan)
-					//.frame(maxWidth: .infinity, alignment: .leading)
-						.contentShape(Rectangle())
-					/* this stops selection working
-					 .onTapGesture(count:2)
-					 {
-					 print("double click atom")
-					 }
-					 */
+					Label("Filter",systemImage: "magnifyingglass")
+					TextField("moov",text:$fourccFilter)
+					.onChange(of: fourccFilter)
+					{
+						newvalue in
+						 print("onChange fourccFilter=\(fourccFilter) newvalue=\(newvalue)")
+						fourccFilter = newvalue
+					}
+				}
+				Label(fourccFilter,systemImage: "bolt.car")
+				*/
+				
+				
+				List(selection:$selectedAtom)
+				{
+					ForEach(fileDecoder.lastMeta.AtomTree ?? [])
+					{
+						atom in
+						AtomView( atom:atom, fourccFilter: fourccFilter )
+						//.background(.cyan)
+						//.frame(maxWidth: .infinity, alignment: .leading)
+							.contentShape(Rectangle())
+						/* this stops selection working
+						 .onTapGesture(count:2)
+						 {
+						 print("double click atom")
+						 }
+						 */
+					}
 				}
 			}
 			

@@ -34,45 +34,52 @@ struct AtomView: View, Hashable
 	var atom : AtomMeta
 	//	makes this non hashable :/ so root needs a map of expanded items?
 	//@State var isExpanded: Bool
-	
+	var fourccFilter : String
 
 	
 	var body: some View
 	{
-		DisclosureGroup()
+		var AllChildrenVisible = fourccFilter.isEmpty || atom.MatchFourcc(matchFourcc: fourccFilter)
+		var Visible = AllChildrenVisible || atom.ContainsFourcc(matchFourcc: fourccFilter)
+		
+		
+		if ( Visible )
 		{
-			//Label("Fourcc \(atom.Fourcc)", systemImage:"questionmark.square.fill")
-			Label("Atom Size \(FormatDataSize(Bytes: atom.AtomSizeBytes))", systemImage:"questionmark.square.fill")
-				.textSelection(.enabled)
-			HStack
+			DisclosureGroup()
 			{
-				Label("Header Size \(FormatDataSize(Bytes: atom.HeaderSizeBytes))", systemImage:"questionmark.square.fill")
+				//Label("Fourcc \(atom.Fourcc)", systemImage:"questionmark.square.fill")
+				Label("Atom Size \(FormatDataSize(Bytes: atom.AtomSizeBytes))", systemImage:"questionmark.square.fill")
 					.textSelection(.enabled)
-				Label("Content Size \(FormatDataSize(Bytes: atom.ContentSizeBytes))", systemImage:"questionmark.square.fill")
-					.textSelection(.enabled)
-			}
-			//Label("Content file offset\(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
-			
-			
-			if let children = atom.Children
-			{
-				ForEach(children)
+				HStack
 				{
-					//Label("child", systemImage:"questionmark.square.fill")
-					child in
-					AtomView( atom:child )
+					Label("Header Size \(FormatDataSize(Bytes: atom.HeaderSizeBytes))", systemImage:"questionmark.square.fill")
+						.textSelection(.enabled)
+					Label("Content Size \(FormatDataSize(Bytes: atom.ContentSizeBytes))", systemImage:"questionmark.square.fill")
+						.textSelection(.enabled)
+				}
+				//Label("Content file offset\(atom.HeaderSizeBytes) bytes", systemImage:"questionmark.square.fill")
+				
+				
+				if let children = atom.Children
+				{
+					ForEach(children)
+					{
+						//Label("child", systemImage:"questionmark.square.fill")
+						child in
+						let ChildFourccFilter = AllChildrenVisible ? "" : fourccFilter
+						AtomView( atom:child, fourccFilter: ChildFourccFilter )
+					}
 				}
 			}
-		}
-		label:
-		{
-			HStack
+			label:
 			{
-				Label("\(atom.Fourcc)", systemImage: "atom")
-					.textSelection(.enabled)
-				Spacer()
+				HStack
+				{
+					Label("\(atom.Fourcc)", systemImage: "atom")
+						.textSelection(.enabled)
+					Spacer()
+				}
 			}
-		}
 			/*stops selection and only applies to label
 			 .onTapGesture(count:2)
 			 {
@@ -80,6 +87,6 @@ struct AtomView: View, Hashable
 			 //isExpanded = !isExpanded
 			 }
 			 */
-		
+		}
 	}
 }
