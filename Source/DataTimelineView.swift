@@ -193,13 +193,13 @@ struct DataTimelineView<TrackLabel:View>: View
 					.onChange(of: ScrollX)
 					{
 						value in
-						print("ScrollX changed from above value=\(value) ScrollX=\(ScrollX)")
+						//print("ScrollX changed from above value=\(value) ScrollX=\(ScrollX)")
 						scene.SetScrollX(scroll: value)
 					}
 					.onChange(of: scene.ScrollX)
 					{
 						value in
-						print("scene changed")
+						//print("scene changed")
 						ScrollX = value
 					}
 			}

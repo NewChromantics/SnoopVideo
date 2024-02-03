@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF5BD38C2B6EC260009098D0 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BD38B2B6EC260009098D0 /* FileModel.swift */; };
 		BF5EF7942B4B4241002AE6FB /* PopMp4 in Frameworks */ = {isa = PBXBuildFile; productRef = BF5EF7932B4B4241002AE6FB /* PopMp4 */; };
 		BF6453692B656B7A00861D82 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6453672B656B7A00861D82 /* TrackView.swift */; };
 		BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6453682B656B7A00861D82 /* AtomView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF5BD38B2B6EC260009098D0 /* FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		BF6453662B647AC800861D82 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
 		BF6453672B656B7A00861D82 /* TrackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		BF6453682B656B7A00861D82 /* AtomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomView.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				BF6453682B656B7A00861D82 /* AtomView.swift */,
+				BF5BD38B2B6EC260009098D0 /* FileModel.swift */,
 				BF64536E2B669D2700861D82 /* DataTimelineView.swift */,
 				BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */,
 				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
@@ -185,6 +188,7 @@
 			files = (
 				BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */,
 				BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */,
+				BF5BD38C2B6EC260009098D0 /* FileModel.swift in Sources */,
 				BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */,
 				BF64536F2B669D2700861D82 /* DataTimelineView.swift in Sources */,
 				BF6453692B656B7A00861D82 /* TrackView.swift in Sources */,
@@ -332,7 +336,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = SnoopVideo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -374,7 +378,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = SnoopVideo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

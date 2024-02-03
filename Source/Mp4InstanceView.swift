@@ -34,7 +34,7 @@ public extension Binding {
 //	render an mp4 instance's state & data
 struct Mp4InstanceView: View
 {
-	@StateObject var mp4Model = Mp4ViewModel()
+	@StateObject var fileDecoder = FileDecoderWrapper()
 	//@Binding var document: SnoopVideoDocument
 	var documentUrl : URL
 	@State var selectedAtom: UUID?
@@ -53,11 +53,11 @@ struct Mp4InstanceView: View
 
 	var body: some View
 	{
-		let Instance = mp4Model.lastMeta.Instance ?? -1
-		let BytesParsed = FormatDataSize( Bytes: mp4Model.lastMeta.Mp4BytesParsed ?? 0 )
+		let Instance = fileDecoder.lastMeta.Instance ?? -1
+		let BytesParsed = FormatDataSize( Bytes: fileDecoder.lastMeta.Mp4BytesParsed ?? 0 )
 		let debug = "Parsed \(BytesParsed) (Instance \(Instance))"
 		
-		Label( "\(documentUrl.absoluteString) \(mp4Model.loadingStatus.description)", systemImage: "bolt.fill")
+		Label( "\(documentUrl.absoluteString) \(fileDecoder.loadingStatus.description)", systemImage: "bolt.fill")
 			.padding(.all, 6.0)
 			.textSelection(.enabled)
 
@@ -68,11 +68,11 @@ struct Mp4InstanceView: View
 			{
 				Task
 				{
-					try await mp4Model.Load(filename:documentUrl.absoluteString)
+					try await fileDecoder.Load(filename:documentUrl.absoluteString)
 				}
 			}
 
-		if let error = mp4Model.error
+		if let error = fileDecoder.error
 		{
 			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
 				.textSelection(.enabled)
@@ -88,7 +88,7 @@ struct Mp4InstanceView: View
 		{
 			List(selection:$selectedAtom)
 			{
-				ForEach(mp4Model.lastMeta.AtomTree ?? [])
+				ForEach(fileDecoder.lastMeta.AtomTree ?? [])
 				{
 					atom in
 					AtomView( atom:atom )
@@ -119,13 +119,13 @@ struct Mp4InstanceView: View
 				)
 				.onChange(of: sharedScrollX)
 				{
-					print("slider on change \(sharedScrollX)")
+					//print("slider on change \(sharedScrollX)")
 				}
 			}
 			
 			List(selection:$selectedTrack)
 			{
-				ForEach(mp4Model.lastMeta.tracks)
+				ForEach(fileDecoder.lastMeta.tracks)
 				{
 					track in
 					TrackView( track:track, ScrollX: $sharedScrollX )
