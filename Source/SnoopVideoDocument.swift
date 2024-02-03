@@ -8,14 +8,14 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-/*
-	app-defined custom type
-extension UTType {
-	static var quicktime: UTType {
-		UTType(importedAs: "com.apple.quicktime-movie")
+//	app-defined custom type
+extension UTType
+{
+	static var H264Stream: UTType {
+		UTType(importedAs: "com.newchromantics.h264stream")
 	}
 }
-*/
+
 
 struct SnoopVideoDocument: FileDocument 
 {
@@ -25,7 +25,8 @@ struct SnoopVideoDocument: FileDocument
 			UTType.appleProtectedMPEG4Video,
 			UTType.mpeg4Movie,
 			UTType.movie,
-			UTType.quickTimeMovie
+			UTType.quickTimeMovie,
+			UTType.H264Stream
 		]
 	}
 
