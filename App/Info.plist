@@ -6,6 +6,18 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
+			<string>H264 Stream</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.newchromantics.h264stream</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
 			<string>Video Files</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
@@ -13,61 +25,49 @@
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.mpeg4-a</string>
+				<string>public.mpeg-4</string>
+				<string>public.mpeg-4-audio</string>
+				<string>com.apple.protected-mpeg-4-audio</string>
+				<string>com.apple.protected-mpeg-4-video</string>
+				<string>public.avi</string>
+				<string>com.apple.quicktime-movie</string>
+				<string>public.mpeg</string>
+				<string>public.mpeg-2-video</string>
+				<string>public.mpeg-2-transport-stream</string>
 			</array>
-			<key>NSUbiquitousDocumentUserActivityType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).example-document</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeName</key>
-			<string>H264 Stream</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.newchromantics.h264stream</string>
-			</array>
-			<key>NSUbiquitousDocumentUserActivityType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).example-document</string>
 		</dict>
 	</array>
-<key>LSSupportsOpeningDocumentsInPlace</key>
- <true/>
-<key>UTImportedTypeDeclarations</key>
- <array>
-  <dict>
-   <key>UTTypeConformsTo</key>
-   <array>
-    <string>public.content</string>
-    <string>public.data</string>
-   </array>
-   <key>UTTypeDescription</key>
-   <string>H264 Stream</string>
-   <key>UTTypeIconFiles</key>
-   <array>
-   </array>
-   <key>UTTypeIdentifier</key>
-   <string>com.newchromantics.h264stream</string>
-   <key>UTTypeTagSpecification</key>
-   <dict>
-    <key>public.filename-extension</key>
-    <array>
-     <string>h264</string>
-    </array>
-    <key>public.mime-type</key>
-    <array>
-     <string>data/com.newchromantics.h264stream</string>
-    </array>
-   </dict>
-  </dict>
- </array>
-
-
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>H264 Stream</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>com.newchromantics.h264stream</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>h264</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>data/com.newchromantics.h264stream</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
