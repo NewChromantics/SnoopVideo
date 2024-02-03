@@ -21,7 +21,7 @@ public enum LoadingStatus : CustomStringConvertible
 //	so we wrap it
 public class FileDecoderWrapper : ObservableObject
 {
-	public var				decoder : Mp4FileDecoder? = nil
+	public var				decoder : FileDecoder? = nil
 	@Published public var	lastMeta = Mp4Meta()
 	@Published public var	loadingStatus = LoadingStatus.Init
 	public var				error : String?
@@ -37,7 +37,20 @@ public class FileDecoderWrapper : ObservableObject
 	@MainActor // as we change published variables, we need to run on the main thread
 	public func Load(filename: String) async throws
 	{
-		decoder = Mp4FileDecoder(filename: filename)
+		//	gr: change this so if it fails, revert to h264 stream decoder.
+		//		possibly we want some header probe functions.
+		//		it would also be good to get file type from document opener.
+		//		But for now, hacky file extension check
+		if ( filename.lowercased().hasSuffix(".h264") )
+		{
+			//decoder = H264FileDecoder(filename: filename)
+			decoder = Mp4FileDecoder(filename: filename)
+		}
+		else
+		{
+			decoder = Mp4FileDecoder(filename: filename)
+		}
+			
 		loadingStatus = LoadingStatus.Loading
 
 		while ( true )
@@ -64,12 +77,22 @@ public class FileDecoderWrapper : ObservableObject
 
 
 
-public class Mp4FileDecoder : ObservableObject
+public protocol FileDecoder
+{
+	init(filename:String)
+	
+	func WaitForNewMeta() async throws -> Mp4Meta
+}
+
+
+
+
+public class Mp4FileDecoder : FileDecoder
 {
 	var mp4Decoder : PopMp4Instance
 	
 	
-	public init(filename:String)
+	required public init(filename:String)
 	{
 		mp4Decoder = PopMp4Instance(Filename: filename)
 		print("new Mp4ViewModel")
@@ -86,4 +109,6 @@ public class Mp4FileDecoder : ObservableObject
 		return NewMeta
 	}
 }
+
+
 
