@@ -43,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF5AC58B2B6EF76C007E703D /* PopH264 in Frameworks */,
 				BF5EF7942B4B4241002AE6FB /* PopMp4 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +130,7 @@
 			name = SnoopVideo;
 			packageProductDependencies = (
 				BF5EF7932B4B4241002AE6FB /* PopMp4 */,
+				BF5AC58A2B6EF76C007E703D /* PopH264 */,
 			);
 			productName = SnoopVideo;
 			productReference = BF79FA302B44A1BD00914CB0 /* SnoopVideo.app */;
@@ -160,6 +162,7 @@
 			mainGroup = BF79FA272B44A1BD00914CB0;
 			packageReferences = (
 				BF4366492B4B115300009182 /* XCLocalSwiftPackageReference "../PopMp4/PopMp4.SwiftPackage" */,
+				BF5AC5892B6EF76C007E703D /* XCLocalSwiftPackageReference "../PopH264.swiftpackage" */,
 			);
 			productRefGroup = BF79FA312B44A1BD00914CB0 /* Products */;
 			projectDirPath = "";
@@ -434,9 +437,17 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../PopMp4/PopMp4.SwiftPackage;
 		};
+		BF5AC5892B6EF76C007E703D /* XCLocalSwiftPackageReference "../PopH264.swiftpackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../PopH264.swiftpackage;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BF5AC58A2B6EF76C007E703D /* PopH264 */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PopH264;
+		};
 		BF5EF7932B4B4241002AE6FB /* PopMp4 */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF4366492B4B115300009182 /* XCLocalSwiftPackageReference "../PopMp4/PopMp4.SwiftPackage" */;

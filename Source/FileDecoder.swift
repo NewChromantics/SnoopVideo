@@ -1,5 +1,11 @@
 import SwiftUI
 import PopMp4
+import PopH264
+
+enum RuntimeError: Error
+{
+	case runtimeError(String)
+}
 
 public enum LoadingStatus : CustomStringConvertible
 {
@@ -43,8 +49,7 @@ public class FileDecoderWrapper : ObservableObject
 		//		But for now, hacky file extension check
 		if ( filename.lowercased().hasSuffix(".h264") )
 		{
-			//decoder = H264FileDecoder(filename: filename)
-			decoder = Mp4FileDecoder(filename: filename)
+			decoder = H264FileDecoder(filename: filename)
 		}
 		else
 		{
@@ -110,5 +115,110 @@ public class Mp4FileDecoder : FileDecoder
 	}
 }
 
+
+
+
+
+public class H264FileDecoder : FileDecoder
+{
+	var decoder : PopH264Instance
+	var readFileError : String?
+	var readFileFinished = false
+	var decodedFrames : [AtomMeta] = []
+	
+	required public init(filename:String)
+	{
+		decoder = PopH264Instance(Filename: filename)
+		Task.init
+		{
+			do
+			{
+				try await ReadFileThread(filename: filename)
+				readFileFinished = true
+			}
+			catch
+			{
+				readFileError = error.localizedDescription
+			}
+		}
+	}
+	
+	func ReadFileThread(filename:String) async throws
+	{
+		//let fileHandle = FileHandle(forReadingAtPath: filename)
+		let fileHandle = try FileHandle(forReadingFrom: URL(string:filename)! )
+		if ( fileHandle == nil )
+		{
+			throw RuntimeError.runtimeError("Failed to open file handle")
+		}
+		let BufferSizeMb = 1
+		let BufferSizeKb = BufferSizeMb * 1024
+		let BufferSize = BufferSizeKb * 1024
+
+		while ( true )
+		{
+			let readData = fileHandle.readData(ofLength: BufferSize)
+		
+			//	push data
+			decoder.PushData(data:readData)
+			
+			//	EOF or read error.
+			if ( readData.isEmpty )
+			{
+				break;
+			}
+		}
+		
+		decoder.PushEndOfFile()
+		fileHandle.closeFile()
+	}
+	
+	
+	@MainActor // as we change published variables, we need to run on the main thread
+	public func WaitForNewMeta() async throws -> PopMp4.Mp4Meta
+	{
+		//	this peeks the decoder
+		//	then, if data, add to list of "atoms" (frames)
+		//	pop frame & move on to next
+		let NextFrameMeta = await decoder.PeekNextFrame()
+		
+		if ( NextFrameMeta.QueuedFrames ?? 0 > 0 )
+		{
+			//	throw away frame from decoder
+			var PoppedFrameNumber = try await decoder.PopNextFrame()
+			
+			//	save this frame
+			var HwAccell = NextFrameMeta.HardwareAccelerated ?? false;
+			var label = "Frame \(PoppedFrameNumber) (Hardware Accellerated=\(HwAccell))";
+			var frameMeta = AtomMeta(fourcc:label)
+			frameMeta.Children = []
+			//frameMeta.ContentSizeBytes = NextFrameMeta.TotalPlaneBytes
+			for plane in NextFrameMeta.Planes ?? []
+			{
+				var label = "\(plane.Width)x\(plane.Height) \(plane.Format)"
+				var child = AtomMeta(fourcc:label)
+				child.ContentSizeBytes = plane.DataSize
+				frameMeta.Children?.append(child)
+			}
+			
+			decodedFrames.append(frameMeta)
+		}
+
+		//	if meta hasn't updated, loop
+		//	if finished, stop
+		
+		var convertedMeta = PopMp4.Mp4Meta()
+		convertedMeta.Error = NextFrameMeta.Error
+		convertedMeta.IsFinished = false
+		convertedMeta.AtomTree = decodedFrames
+		
+		if ( readFileError != nil )
+		{
+			convertedMeta.Error = readFileError
+		}
+		
+		return convertedMeta
+	}
+}
 
 
