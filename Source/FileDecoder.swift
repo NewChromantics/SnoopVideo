@@ -60,8 +60,9 @@ public class FileDecoderWrapper : ObservableObject
 
 		while ( true )
 		{
-			try await Task.sleep(nanoseconds: 10_000_000)	//	10_000_000ns = 10ms
-			
+			//try await Task.sleep(nanoseconds: 10_000_000)	//	10_000_000ns = 10ms
+			try await Task.sleep(nanoseconds: 1000)	//	10_000_000ns = 10ms
+
 			lastMeta = try await decoder!.WaitForNewMeta()
 			
 			if ( lastMeta.Error != nil )
@@ -125,6 +126,11 @@ public class H264FileDecoder : FileDecoder
 	var readFileError : String?
 	var readFileFinished = false
 	var decodedFrames : [AtomMeta] = []
+	var pushCounter : Int32=0	//	used as a frame number
+	var outputFrameCounter : Int32=0
+	var AutoFrameCounterFirstFrame = 0
+	//	put all decoded frames into a track
+	var Track = TrackMeta(codec:"avc1")
 	
 	required public init(filename:String)
 	{
@@ -159,14 +165,17 @@ public class H264FileDecoder : FileDecoder
 		{
 			let readData = fileHandle.readData(ofLength: BufferSize)
 		
-			//	push data
-			decoder.PushData(data:readData)
-			
 			//	EOF or read error.
 			if ( readData.isEmpty )
 			{
 				break;
 			}
+			
+			//	push data
+			decoder.PushData(data:readData,frameNumber:pushCounter)
+			pushCounter += 1
+			
+			
 		}
 		
 		decoder.PushEndOfFile()
@@ -185,11 +194,25 @@ public class H264FileDecoder : FileDecoder
 		if ( NextFrameMeta.QueuedFrames ?? 0 > 0 )
 		{
 			//	throw away frame from decoder
-			var PoppedFrameNumber = try await decoder.PopNextFrame()
+			var FrameNumber = try await decoder.PopNextFrame()
+			
+			//	gr: use framenumber from meta
+			FrameNumber = NextFrameMeta.FrameNumber ?? 0
+			
+			//	detect un-numbered frames and auto add them (poph264 should do this!)
+			//	we've already had a frame 0, we're getting more than one
+			if ( FrameNumber == 0 && outputFrameCounter > 0 )
+			{
+				FrameNumber = AutoFrameCounterFirstFrame + Int(outputFrameCounter)
+			}
+			outputFrameCounter += 1
+			
+			Track.SampleDecodeTimes.append(FrameNumber)
+
 			
 			//	save this frame
 			var HwAccell = NextFrameMeta.HardwareAccelerated ?? false;
-			var label = "Frame \(PoppedFrameNumber) (Hardware Accellerated=\(HwAccell))";
+			var label = "Frame \(FrameNumber) (Hardware Accellerated=\(HwAccell))";
 			var frameMeta = AtomMeta(fourcc:label)
 			frameMeta.Children = []
 			//frameMeta.ContentSizeBytes = NextFrameMeta.TotalPlaneBytes
@@ -211,6 +234,7 @@ public class H264FileDecoder : FileDecoder
 		convertedMeta.Error = NextFrameMeta.Error
 		convertedMeta.IsFinished = false
 		convertedMeta.AtomTree = decodedFrames
+		convertedMeta.Tracks = [Track]
 		
 		if ( readFileError != nil )
 		{

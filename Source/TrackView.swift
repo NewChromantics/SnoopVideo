@@ -31,7 +31,7 @@ struct TrackView: View//, Hashable
 
 	func GetTrackLabel(Extra:String="") -> some View
 	{
-		return Label("Track \(track.Codec) \(Extra)", systemImage:GetIconForCodec(codec: track.Codec))
+		return Label("Track \(track.Codec) x\(track.SampleDecodeTimes.count) \(Extra)", systemImage:GetIconForCodec(codec: track.Codec))
 	}
 	
 	

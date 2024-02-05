@@ -162,9 +162,6 @@ struct DataTimelineView<TrackLabel:View>: View
 			let scene = GameScene( size:CGSize(width:99,height:99) )
 			//scene.size = CGSize(width: 300, height: height)
 			scene.scaleMode = .resizeFill
-			//scene.PlotPositions(Times:initialPlotTimes)
-			//scene.SetScrollX(scroll: ScrollX)
-		
 			return scene
 		}()
 
