@@ -203,7 +203,7 @@ public class H264FileDecoder : FileDecoder
 			//	we've already had a frame 0, we're getting more than one
 			if ( FrameNumber == 0 && outputFrameCounter > 0 )
 			{
-				FrameNumber = AutoFrameCounterFirstFrame + Int(outputFrameCounter)
+				FrameNumber = AutoFrameCounterFirstFrame + Int(outputFrameCounter*10)
 			}
 			outputFrameCounter += 1
 			
@@ -234,7 +234,11 @@ public class H264FileDecoder : FileDecoder
 		convertedMeta.Error = NextFrameMeta.Error
 		convertedMeta.IsFinished = false
 		convertedMeta.AtomTree = decodedFrames
-		convertedMeta.Tracks = [Track]
+		
+		if ( outputFrameCounter > 100 )
+		{
+			convertedMeta.Tracks = [Track]
+		}
 		
 		if ( readFileError != nil )
 		{
