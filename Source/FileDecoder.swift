@@ -93,36 +93,10 @@ public protocol FileDecoder
 
 
 
-public class Mp4FileDecoder : FileDecoder
+
+
+public class StreamingFileDecoder : FileDecoder
 {
-	var mp4Decoder : PopMp4Instance
-	
-	
-	required public init(filename:String)
-	{
-		mp4Decoder = PopMp4Instance(Filename: filename)
-		print("new Mp4ViewModel")
-	}
-	
-	@MainActor // as we change published variables, we need to run on the main thread
-	public func WaitForNewMeta() async throws -> Mp4Meta
-	{
-		let NewMeta = await mp4Decoder.WaitForMetaChange()
-		
-		//	if meta hasn't updated, loop
-		//	if finished, stop
-		
-		return NewMeta
-	}
-}
-
-
-
-
-
-public class H264FileDecoder : FileDecoder
-{
-	var decoder : PopH264Instance
 	var readFileError : String?
 	var readFileFinished = false
 	var decodedFrames : [AtomMeta] = []
@@ -134,7 +108,6 @@ public class H264FileDecoder : FileDecoder
 	
 	required public init(filename:String)
 	{
-		decoder = PopH264Instance(Filename: filename)
 		Task.init
 		{
 			do
@@ -148,6 +121,18 @@ public class H264FileDecoder : FileDecoder
 			}
 		}
 	}
+	
+	func OnFileData(data:Data) throws
+	{
+		throw fatalError("OnFileData Not overloaded")
+	}
+	
+
+	func OnFileEnd() throws
+	{
+		throw fatalError("OnFileEnd Not overloaded")
+	}
+
 	
 	func ReadFileThread(filename:String) async throws
 	{
@@ -172,19 +157,50 @@ public class H264FileDecoder : FileDecoder
 			}
 			
 			//	push data
-			decoder.PushData(data:readData,frameNumber:pushCounter)
-			pushCounter += 1
-			
-			
+			try OnFileData(data: readData)
 		}
 		
-		decoder.PushEndOfFile()
+		try OnFileEnd()
 		fileHandle.closeFile()
 	}
 	
 	
 	@MainActor // as we change published variables, we need to run on the main thread
 	public func WaitForNewMeta() async throws -> PopMp4.Mp4Meta
+	{
+		 throw fatalError("WaitForNewMeta Not overloaded")
+	}
+}
+
+
+
+
+
+
+public class H264FileDecoder : StreamingFileDecoder
+{
+	var decoder : PopH264Instance
+	
+	required public init(filename:String)
+	{
+		decoder = PopH264Instance()
+		super.init(filename: filename)
+	}
+	
+	override func OnFileData(data:Data) throws
+	{
+		decoder.PushData(data:data,frameNumber:pushCounter)
+		pushCounter += 1
+	}
+	
+	override func OnFileEnd()
+	{
+		decoder.PushEndOfFile()
+	}
+	
+	
+	@MainActor // as we change published variables, we need to run on the main thread
+	override public func WaitForNewMeta() async throws -> PopMp4.Mp4Meta
 	{
 		//	this peeks the decoder
 		//	then, if data, add to list of "atoms" (frames)
@@ -250,3 +266,36 @@ public class H264FileDecoder : FileDecoder
 }
 
 
+
+public class Mp4FileDecoder : StreamingFileDecoder
+{
+	var decoder : PopMp4Instance
+	
+	
+	required public init(filename:String)
+	{
+		decoder = PopMp4Instance()
+		super.init(filename: filename)
+	}
+	
+	override func OnFileData(data:Data) throws
+	{
+		decoder.PushData(data:data)
+	}
+	
+	override func OnFileEnd()
+	{
+		decoder.PushEndOfFile()
+	}
+	
+	@MainActor // as we change published variables, we need to run on the main thread
+	override public func WaitForNewMeta() async throws -> Mp4Meta
+	{
+		let NewMeta = await decoder.WaitForMetaChange()
+		
+		//	if meta hasn't updated, loop
+		//	if finished, stop
+		
+		return NewMeta
+	}
+}
