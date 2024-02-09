@@ -51,6 +51,27 @@ struct Mp4InstanceView: View
 	{
 		return 1000
 	}
+	
+	func AtomTree()-> some View
+	{
+		List(selection:$selectedAtom)
+		{
+			ForEach(fileDecoder.lastMeta.AtomTree ?? [])
+			{
+				atom in
+				AtomView( atom:atom, fourccFilter: fourccFilter )
+				//.background(.cyan)
+				//.frame(maxWidth: .infinity, alignment: .leading)
+					.contentShape(Rectangle())
+				/* this stops selection working
+				 .onTapGesture(count:2)
+				 {
+				 print("double click atom")
+				 }
+				 */
+			}
+		}
+	}
 
 	var body: some View
 	{
@@ -87,41 +108,36 @@ struct Mp4InstanceView: View
 		
 		VSplitView()
 		{
-			VStack
+			//	seem to need geometry reader to make HSplitView work
+			GeometryReader
 			{
-				/* not currently redrawing list
-				HStack
+				geometry in
+				VStack
 				{
-					Label("Filter",systemImage: "magnifyingglass")
-					TextField("moov",text:$fourccFilter)
-					.onChange(of: fourccFilter)
+					HSplitView 
 					{
-						newvalue in
-						 print("onChange fourccFilter=\(fourccFilter) newvalue=\(newvalue)")
-						fourccFilter = newvalue
-					}
-				}
-				Label(fourccFilter,systemImage: "bolt.car")
-				*/
-				
-				
-				List(selection:$selectedAtom)
-				{
-					ForEach(fileDecoder.lastMeta.AtomTree ?? [])
-					{
-						atom in
-						AtomView( atom:atom, fourccFilter: fourccFilter )
-						//.background(.cyan)
-						//.frame(maxWidth: .infinity, alignment: .leading)
-							.contentShape(Rectangle())
-						/* this stops selection working
-						 .onTapGesture(count:2)
+						/* not currently redrawing list
+						 HStack
 						 {
-						 print("double click atom")
+						 Label("Filter",systemImage: "magnifyingglass")
+						 TextField("moov",text:$fourccFilter)
+						 .onChange(of: fourccFilter)
+						 {
+						 newvalue in
+						 print("onChange fourccFilter=\(fourccFilter) newvalue=\(newvalue)")
+						 fourccFilter = newvalue
 						 }
+						 }
+						 Label(fourccFilter,systemImage: "bolt.car")
 						 */
+						
+						AtomTree()
+							.frame(maxWidth: .infinity, maxHeight: .infinity)
+						HexView(input: Data(count: 100))
+							.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+							.padding(20)
 					}
-				}
+				}.frame(width: geometry.size.width, height: geometry.size.height)
 			}
 			
 			HStack

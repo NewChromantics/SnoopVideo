@@ -13,6 +13,7 @@
 		BF6453692B656B7A00861D82 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6453672B656B7A00861D82 /* TrackView.swift */; };
 		BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6453682B656B7A00861D82 /* AtomView.swift */; };
 		BF64536F2B669D2700861D82 /* DataTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64536E2B669D2700861D82 /* DataTimelineView.swift */; };
+		BF72A6D82B76BE4200431AD3 /* HexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF72A6D72B76BE4200431AD3 /* HexView.swift */; };
 		BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */; };
 		BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */; };
 		BF79FA382B44A1BD00914CB0 /* Mp4InstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */; };
@@ -26,6 +27,7 @@
 		BF6453672B656B7A00861D82 /* TrackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		BF6453682B656B7A00861D82 /* AtomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomView.swift; sourceTree = "<group>"; };
 		BF64536E2B669D2700861D82 /* DataTimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTimelineView.swift; sourceTree = "<group>"; };
+		BF72A6D72B76BE4200431AD3 /* HexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexView.swift; sourceTree = "<group>"; };
 		BF79FA302B44A1BD00914CB0 /* SnoopVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnoopVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoApp.swift; sourceTree = "<group>"; };
 		BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoopVideoDocument.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		BF64536C2B656BAA00861D82 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BF72A6D72B76BE4200431AD3 /* HexView.swift */,
 				BF6453682B656B7A00861D82 /* AtomView.swift */,
 				BF5BD38B2B6EC260009098D0 /* FileDecoder.swift */,
 				BF64536E2B669D2700861D82 /* DataTimelineView.swift */,
@@ -190,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF72A6D82B76BE4200431AD3 /* HexView.swift in Sources */,
 				BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */,
 				BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */,
 				BF5BD38C2B6EC260009098D0 /* FileDecoder.swift in Sources */,
