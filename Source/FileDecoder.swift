@@ -79,6 +79,23 @@ public class FileDecoderWrapper : ObservableObject
 
 		loadingStatus = LoadingStatus.Finished
 	}
+	
+	public func GetFileBytes(atom:AtomMeta?) async throws -> Data?
+	{
+		if ( atom == nil )
+		{
+			return nil
+		}
+		
+		if ( decoder == nil )
+		{
+			throw RuntimeError.runtimeError("no decoder")
+		}
+
+		let filePosition = UInt64(atom!.ContentsFilePosition)
+		let size = UInt64(atom!.ContentSizeBytes)
+		return try await decoder!.ReadFileBytes(filePosition:filePosition,size:size)
+	}
 }
 
 
@@ -88,7 +105,10 @@ public protocol FileDecoder
 	init(filename:String)
 	
 	func WaitForNewMeta() async throws -> Mp4Meta
+	
+	func ReadFileBytes(filePosition:UInt64,size:UInt64) async throws -> Data
 }
+
 
 
 
@@ -97,6 +117,7 @@ public protocol FileDecoder
 
 public class StreamingFileDecoder : FileDecoder
 {
+	var fileUrl : URL
 	var readFileError : String?
 	var readFileFinished = false
 	var decodedFrames : [AtomMeta] = []
@@ -108,6 +129,7 @@ public class StreamingFileDecoder : FileDecoder
 	
 	required public init(filename:String)
 	{
+		fileUrl = URL(string:filename)!
 		Task.init
 		{
 			do
@@ -133,11 +155,25 @@ public class StreamingFileDecoder : FileDecoder
 		throw fatalError("OnFileEnd Not overloaded")
 	}
 
+	public func ReadFileBytes(filePosition:UInt64,size:UInt64) async throws -> Data
+	{
+		print("Reading atom bytes at \(filePosition) x\(size)...")
+
+		//	gr; make a file handle that we lock & re-use
+		let fileHandle = try FileHandle(forReadingFrom: fileUrl )
+		if ( fileHandle == nil )
+		{
+			throw RuntimeError.runtimeError("Failed to open file handle")
+		}
+		try fileHandle.seek(toOffset: filePosition)
+		let data = fileHandle.readData(ofLength: Int(size) )
+		return data
+	}
 	
 	func ReadFileThread(filename:String) async throws
 	{
 		//let fileHandle = FileHandle(forReadingAtPath: filename)
-		let fileHandle = try FileHandle(forReadingFrom: URL(string:filename)! )
+		let fileHandle = try FileHandle(forReadingFrom: fileUrl )
 		if ( fileHandle == nil )
 		{
 			throw RuntimeError.runtimeError("Failed to open file handle")

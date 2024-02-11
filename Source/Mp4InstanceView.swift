@@ -41,6 +41,10 @@ struct Mp4InstanceView: View
 	@State var selectedTrack: UUID?
 	@State var sharedScrollX : Int=1
 	@State var fourccFilter: String=""
+	
+	//	when we have selected something in the tree, we asynchronously load it here
+	//	which gets displayed in the hex view
+	@State var visibleHexData: Data?
 	//@State var isExpanded : Bool[
 	
 	func GetTimelineMin() -> Int
@@ -50,6 +54,24 @@ struct Mp4InstanceView: View
 	func GetTimelineMax() -> Int
 	{
 		return 1000
+	}
+	
+	func GetAtom(AtomUid:UUID?) -> AtomMeta?
+	{
+		if ( AtomUid == nil )
+		{
+			return nil
+		}
+		let RootAtoms = fileDecoder.lastMeta.AtomTree ?? []
+		for atom in RootAtoms
+		{
+			let childMatch = atom.FindAtom(match: AtomUid!)
+			if ( childMatch != nil )
+			{
+				return childMatch
+			}
+		}
+		return nil
 	}
 	
 	func AtomTree()-> some View
@@ -69,6 +91,25 @@ struct Mp4InstanceView: View
 				 print("double click atom")
 				 }
 				 */
+			}
+		}
+		.onChange(of: selectedAtom ?? UUID())
+		{
+			atomUid in
+			Task
+			{
+				//	unselect old data
+				visibleHexData = nil
+				var atom = GetAtom(AtomUid: atomUid)
+				if ( atom == nil )
+				{
+					visibleHexData = Data()
+					return
+				}
+				visibleHexData = Data()
+				//	todo: error handling
+				visibleHexData = try await fileDecoder.GetFileBytes(atom: atom)
+				print("Got new hex data x\(visibleHexData?.count)")
 			}
 		}
 	}
@@ -133,9 +174,9 @@ struct Mp4InstanceView: View
 						
 						AtomTree()
 							.frame(maxWidth: .infinity, maxHeight: .infinity)
-						HexView(input: Data(count: 100))
+						
+						HexView(input: visibleHexData ?? Data() )
 							.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-							.padding(20)
 					}
 				}.frame(width: geometry.size.width, height: geometry.size.height)
 			}
