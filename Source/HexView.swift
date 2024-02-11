@@ -21,7 +21,7 @@ struct HexConversionData
 	}
 }
 
-func bytesToHexString(_ input: Data) -> HexConversionData
+func bytesToHexString(_ input: Data,lineBreakEveryXBytes:Int=1024) -> HexConversionData
 {
 	print("Converting x\(input.count) bytes to string...")
 	
@@ -36,7 +36,6 @@ func bytesToHexString(_ input: Data) -> HexConversionData
 	
 	var Hex = String(NSMutableString(capacity: renderInput.count * 3) )
 	var Char = ""
-	var lineBreakEveryXBytes = 1024
 	var bytesWritten = 0
 	for v in renderInput
 	{
@@ -61,52 +60,77 @@ func bytesToHexString(_ input: Data) -> HexConversionData
 	return output
 }
 
-class BytesAsHexString : ObservableObject
+class HexConversionDataCache : ObservableObject
 {
-	@Published var transformed: HexConversionData
+	public var conversion: HexConversionData
 
 	init(input: Data)
 	{
-		self.transformed = bytesToHexString(input)
+		self.conversion = bytesToHexString(input)
 	}
 }
 
 
 struct HexView: View
 {
-	//@StateObject var cachedBytesAsHexString: BytesAsHexString
-	var conversion : HexConversionData
-	var inputBytes: Data
+	@StateObject var conversionCache: HexConversionDataCache
+	/*@State */var conversion: HexConversionData	//	making this state, also doesnt update view...
+	var inputBytes: Data?
 
 	let monospacedFont = Font
 		.system(size: 12)
 		.monospaced()
 	
-	init(input: Data)
+	var renderConversion : HexConversionData
+	{
+		//	cached version never updated view
+		//return conversionCache.conversion
+		return conversion
+	}
+	
+	init(input: Data?)
 	{
 		inputBytes = input
-		conversion = bytesToHexString(inputBytes)
+
+		if ( inputBytes == nil )
+		{
+			conversion = HexConversionData()
+			//conversion.hexRendered = "null"
+			_conversionCache = StateObject(wrappedValue: HexConversionDataCache(input: Data()))
+			return
+		}
+
+
+		conversion = bytesToHexString(inputBytes!)
+		
+		//	gr: in order to cache properly, the object MUST be contructed inside the wrappedValue: param
 		//	gr: I have no idea why _ prefix solves this compile error
-		//_cachedBytesAsHexString = StateObject(wrappedValue: BytesAsHexString(input: inputBytes))
-		//print("new hex string \(cachedBytesAsHexString.transformed)")
+		_conversionCache = StateObject(wrappedValue: HexConversionDataCache(input: input!))
 	}
 
 
 	
 	var body: some View
 	{
-		ScrollView 
+		if ( inputBytes == nil )
 		{
-			Text(conversion.sizeMessage)
-				.textSelection(.enabled)
-				.frame(maxWidth: .infinity,alignment: .leading)
-			
-			//Text(cachedBytesAsHexString.transformed)
-			Text(conversion.hexRendered)
-				.font(monospacedFont)
-				.textSelection(.enabled)
-				.padding(5)
-				.frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
+			EmptyView()
+		}
+		else
+		{			
+			ScrollView
+			{
+				Text(renderConversion.sizeMessage)
+					.textSelection(.enabled)
+					.frame(maxWidth: .infinity,alignment: .leading)
+				
+				//Text(cachedBytesAsHexString.transformed)
+				Text(renderConversion.hexRendered)
+					.font(monospacedFont)
+					.textSelection(.enabled)
+					.padding(5)
+					.frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
+			}
 		}
 	}
 }
