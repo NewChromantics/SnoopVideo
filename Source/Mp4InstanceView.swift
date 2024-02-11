@@ -44,7 +44,8 @@ struct Mp4InstanceView: View
 	
 	//	when we have selected something in the tree, we asynchronously load it here
 	//	which gets displayed in the hex view
-	@State var visibleHexData: Data?
+	@State var visibleHexData: Data? = nil
+	@State var visibleHexDataLabel: String = ""
 	//@State var isExpanded : Bool[
 	
 	func GetTimelineMin() -> Int
@@ -98,18 +99,31 @@ struct Mp4InstanceView: View
 			atomUid in
 			Task
 			{
-				//	unselect old data
-				visibleHexData = nil
+				print("Selection changed \(atomUid)")
 				var atom = GetAtom(AtomUid: atomUid)
 				if ( atom == nil )
 				{
-					visibleHexData = Data()
+					visibleHexDataLabel = ""
+					visibleHexData = nil
 					return
 				}
+				//	unselect old data
+				visibleHexDataLabel = "\(atom!.Fourcc) loading... "
 				visibleHexData = Data()
-				//	todo: error handling
-				visibleHexData = try await fileDecoder.GetFileBytes(atom: atom)
-				print("Got new hex data x\(visibleHexData?.count)")
+				do
+				{
+					//	emulate some slowness
+					//await try await Task.sleep(nanoseconds: 1_000_000_000)//1sec
+					
+					visibleHexDataLabel = "\(atom!.Fourcc)"
+					visibleHexData = try await fileDecoder.GetFileBytes(atom: atom)
+					print("Got new hex data x\(visibleHexData?.count)")
+				}
+				catch
+				{
+					visibleHexDataLabel = "Error loading \(atom!.Fourcc); \(error.localizedDescription)"
+					visibleHexData = Data()
+				}
 			}
 		}
 	}
@@ -175,8 +189,14 @@ struct Mp4InstanceView: View
 						AtomTree()
 							.frame(maxWidth: .infinity, maxHeight: .infinity)
 						
-						HexView(input: visibleHexData ?? Data() )
-							.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+						VStack
+						{
+							Label(visibleHexDataLabel,systemImage: "info.square.fill")
+								.frame(maxWidth: .infinity, alignment: .topLeading)
+							HexView(input: visibleHexData)
+								.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+						}
+						.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 					}
 				}.frame(width: geometry.size.width, height: geometry.size.height)
 			}
