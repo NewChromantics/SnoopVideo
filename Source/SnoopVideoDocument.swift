@@ -11,8 +11,8 @@ import UniformTypeIdentifiers
 //	app-defined custom type
 extension UTType
 {
-	static var H264Stream: UTType {
-		UTType(importedAs: "com.newchromantics.h264stream")
+	static var RawVideoStream: UTType {
+		UTType(importedAs: "com.newchromantics.rawvideostream")
 	}
 }
 
@@ -26,7 +26,7 @@ struct SnoopVideoDocument: FileDocument
 			UTType.mpeg4Movie,
 			UTType.movie,
 			UTType.quickTimeMovie,
-			UTType.H264Stream
+			UTType.RawVideoStream
 		]
 	}
 

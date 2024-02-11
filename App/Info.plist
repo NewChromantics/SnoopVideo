@@ -6,14 +6,14 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>H264 Stream</string>
+			<string>Raw Video Stream</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.newchromantics.h264stream</string>
+				<string>com.newchromantics.rawvideostream</string>
 			</array>
 		</dict>
 		<dict>
@@ -49,22 +49,25 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>H264 Stream</string>
+			<string>Raw Video Stream</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIcons</key>
 			<dict/>
 			<key>UTTypeIdentifier</key>
-			<string>com.newchromantics.h264stream</string>
+			<string>com.newchromantics.rawvideostream</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
 					<string>h264</string>
+					<string>h265</string>
+					<string>h264</string>
+					<string>hevc</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>data/com.newchromantics.h264stream</string>
+					<string>data/com.newchromantics.rawvideostream</string>
 				</array>
 			</dict>
 		</dict>
