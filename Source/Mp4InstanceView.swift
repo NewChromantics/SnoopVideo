@@ -40,6 +40,7 @@ struct Mp4InstanceView: View
 	@State var selectedAtom: UUID?
 	@State var selectedTrack: UUID?
 	@State var sharedScrollX : Int=1
+	@State var sharedScrollXMax : Int=1000
 	@State var fourccFilter: String=""
 	
 	//	when we have selected something in the tree, we asynchronously load it here
@@ -48,13 +49,13 @@ struct Mp4InstanceView: View
 	@State var visibleHexDataLabel: String = ""
 	//@State var isExpanded : Bool[
 	
-	func GetTimelineMin() -> Int
+	var TimelineMin : Int
 	{
-		return 0
+		return -1000
 	}
-	func GetTimelineMax() -> Int
+	var TimelineMax : Int
 	{
-		return 1000
+		return 10*1000
 	}
 	
 	func GetAtom(AtomUid:UUID?) -> AtomMeta?
@@ -203,16 +204,24 @@ struct Mp4InstanceView: View
 			
 			HStack
 			{
-				Label("\(sharedScrollX)ms", systemImage: "clock.fill")
-					.frame(minWidth: 30, alignment:.leading)
+				Label("\(sharedScrollX)-\(sharedScrollXMax)ms", systemImage: "clock.fill")
+					.frame(maxWidth: 100, alignment:.leading)
 					.padding(.all, 6.0)
 					.textSelection(.enabled)
 
-				Slider(		value: .convert(from:$sharedScrollX),
-							in: 0...100,
-							onEditingChanged: { editing in
-					//isEditing = editing
-				}
+				RangeSlider(
+					viewModel: .init(sliderPosition: sharedScrollX...sharedScrollXMax,
+												 sliderBounds: TimelineMin...TimelineMax,
+												 sliderMinDifference: 1000
+												),
+					sliderPositionChanged: 
+					{
+						minmax in
+							sharedScrollX = minmax.lowerBound
+							sharedScrollXMax = minmax.upperBound
+					},
+					activeColour:Color("TimelineActive"),
+					inactiveColour:Color("TimelineInactive")
 				)
 				.onChange(of: sharedScrollX)
 				{
