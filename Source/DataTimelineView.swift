@@ -124,7 +124,7 @@ class GameScene: SKScene, ObservableObject
 	}
 	
 	
-	func PlotPosition(Time:Int,Colour:NSColor=NSColor.white,Width:Int=3)
+	func PlotPosition(Time:Int,Colour:NSColor,Width:Int=3)
 	{
 		let SceneHeight = frame.height
 		//	upside down plotting and anchor is 0.5
@@ -136,11 +136,11 @@ class GameScene: SKScene, ObservableObject
 		addChild(box)
 	}
 	
-	func PlotPositions(Times:[Int])
+	func PlotPositions(Times:[Int],Colour:Color)
 	{
 		for time in Times
 		{
-			PlotPosition(Time:time)
+			PlotPosition(Time:time,Colour:NSColor(Colour))
 		}
 	}
 
@@ -151,6 +151,7 @@ struct DataTimelineView<TrackLabel:View>: View
 {
 	let height:Int
 	let initialPlotTimes : [Int]
+	let backgroundColour : Color
 	
 	//	scroll is external to allow the variable to be synchronised
 	@Binding var ScrollX:Int
@@ -185,7 +186,8 @@ struct DataTimelineView<TrackLabel:View>: View
 					.ignoresSafeArea()
 					.onAppear()
 					{
-						scene.PlotPositions(Times: initialPlotTimes)
+						scene.backgroundColor = NSColor(backgroundColour)
+						scene.PlotPositions(Times: initialPlotTimes, Colour: Color("TimelinePresentationTime"))
 					}
 					.onChange(of: ScrollX)
 					{

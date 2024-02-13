@@ -41,7 +41,7 @@ struct TrackView: View//, Hashable
 	
 	var body: some View
 	{
-		DataTimelineView(height:TrackHeight, initialPlotTimes: track.SampleDecodeTimes, ScrollX:$ScrollX)
+		DataTimelineView(height:TrackHeight, initialPlotTimes: track.SampleDecodeTimes, backgroundColour: Color("TimelineBackground"), ScrollX:$ScrollX)
 		{
 			GetTrackLabel()
 				.textSelection(.enabled)

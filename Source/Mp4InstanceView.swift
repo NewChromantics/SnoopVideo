@@ -51,7 +51,7 @@ struct Mp4InstanceView: View
 	
 	var TimelineMin : Int
 	{
-		return -1000
+		return 0
 	}
 	var TimelineMax : Int
 	{
@@ -155,8 +155,8 @@ struct Mp4InstanceView: View
 			Label("Decoding Error: \(error)", systemImage: "exclamationmark.triangle.fill")
 				.textSelection(.enabled)
 				.padding(.all, 8.0)
-				.background(.red)
-				.foregroundColor(.white)
+				.background(Color("ErrorBackground"))
+				.foregroundColor(Color("ErrorForeground"))
 				.clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 				
 				
@@ -220,8 +220,8 @@ struct Mp4InstanceView: View
 							sharedScrollX = minmax.lowerBound
 							sharedScrollXMax = minmax.upperBound
 					},
-					activeColour:Color("TimelineActive"),
-					inactiveColour:Color("TimelineInactive")
+					activeColour:Color.accentColor,
+					inactiveColour:Color(NSColor.controlColor)
 				)
 				.onChange(of: sharedScrollX)
 				{
