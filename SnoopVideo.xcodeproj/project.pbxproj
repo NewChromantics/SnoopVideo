@@ -343,7 +343,7 @@
 				CODE_SIGN_ENTITLEMENTS = App/SnoopVideo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_ASSET_PATHS = App/PreviewContent;
+				DEVELOPMENT_ASSET_PATHS = App/Assets.xcassets;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = X52DR36JY2;
 				ENABLE_APP_SANDBOX = YES;
@@ -391,7 +391,7 @@
 				CODE_SIGN_ENTITLEMENTS = App/SnoopVideo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_ASSET_PATHS = App/PreviewContent;
+				DEVELOPMENT_ASSET_PATHS = App/Assets.xcassets;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = X52DR36JY2;
 				ENABLE_APP_SANDBOX = YES;
