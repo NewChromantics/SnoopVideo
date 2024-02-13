@@ -19,6 +19,7 @@
 		BF79FA382B44A1BD00914CB0 /* Mp4InstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */; };
 		BF79FA3A2B44A1BE00914CB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF79FA392B44A1BE00914CB0 /* Assets.xcassets */; };
 		BF79FA3F2B44A1BE00914CB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF79FA3E2B44A1BE00914CB0 /* Preview Assets.xcassets */; };
+		BFDAE27A2B7BFFAC00D254E2 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAE2792B7BFFAC00D254E2 /* RangeSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		BF79FA3E2B44A1BE00914CB0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BF843DF52B5D8E9500247665 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		BF843DFB2B5F21D800247665 /* App.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
+		BFDAE2792B7BFFAC00D254E2 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,11 +65,12 @@
 		BF64536C2B656BAA00861D82 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BF72A6D72B76BE4200431AD3 /* HexView.swift */,
 				BF6453682B656B7A00861D82 /* AtomView.swift */,
-				BF5BD38B2B6EC260009098D0 /* FileDecoder.swift */,
 				BF64536E2B669D2700861D82 /* DataTimelineView.swift */,
+				BF5BD38B2B6EC260009098D0 /* FileDecoder.swift */,
+				BF72A6D72B76BE4200431AD3 /* HexView.swift */,
 				BF79FA372B44A1BD00914CB0 /* Mp4InstanceView.swift */,
+				BFDAE2792B7BFFAC00D254E2 /* RangeSlider.swift */,
 				BF79FA332B44A1BD00914CB0 /* SnoopVideoApp.swift */,
 				BF79FA352B44A1BD00914CB0 /* SnoopVideoDocument.swift */,
 				BF6453672B656B7A00861D82 /* TrackView.swift */,
@@ -197,6 +200,7 @@
 				BF79FA362B44A1BD00914CB0 /* SnoopVideoDocument.swift in Sources */,
 				BF64536A2B656B7A00861D82 /* AtomView.swift in Sources */,
 				BF5BD38C2B6EC260009098D0 /* FileDecoder.swift in Sources */,
+				BFDAE27A2B7BFFAC00D254E2 /* RangeSlider.swift in Sources */,
 				BF79FA342B44A1BD00914CB0 /* SnoopVideoApp.swift in Sources */,
 				BF64536F2B669D2700861D82 /* DataTimelineView.swift in Sources */,
 				BF6453692B656B7A00861D82 /* TrackView.swift in Sources */,
@@ -337,9 +341,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = App/SnoopVideo.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = App/PreviewContent;
-				DEVELOPMENT_TEAM = X52DR36JY2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = X52DR36JY2;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -364,6 +370,7 @@
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -382,9 +389,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = App/SnoopVideo.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = App/PreviewContent;
-				DEVELOPMENT_TEAM = X52DR36JY2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = X52DR36JY2;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
@@ -409,6 +418,7 @@
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
