@@ -37,11 +37,12 @@ struct TrackView: View//, Hashable
 	
 	var track : TrackMeta
 	var TrackHeight = 40
-	@Binding var ScrollX:Int	//	todo: turn this into a time offset
-	
+	@Binding var ViewMinTime:Int
+	@Binding var ViewMaxTime:Int
+
 	var body: some View
 	{
-		DataTimelineView(height:TrackHeight, initialPlotTimes: track.SampleDecodeTimes, backgroundColour: Color("TimelineBackground"), ScrollX:$ScrollX)
+		DataTimelineView(height:TrackHeight, initialPlotTimes: track.SampleDecodeTimes, backgroundColour: Color("TimelineBackground"), ViewMinTime:$ViewMinTime, ViewMaxTime:$ViewMaxTime)
 		{
 			GetTrackLabel()
 				.textSelection(.enabled)

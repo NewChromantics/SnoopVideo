@@ -9,24 +9,26 @@ extension SKView {
 	}
 }
 
+
+//	todo: replace anchorPoint with SKCameraNode
 class GameScene: SKScene, ObservableObject
 {
 	//	temp vars whilst dragging for solid delta
 	var dragStartScreenx : Int?
 	var dragStartAnchorX : CGFloat?
 	
-	@Published var ScrollX : Int = 0	//	outgoing change
-	
-	override init(size: CGSize/*,scrollBinding:Binding<Int>*/)
+	//	outgoing change, but really this should be a binding and we _detect_ changes
+	@Published var ViewMinX : Int = 0
+	@Published var ViewMaxX : Int = 0
+
+	override init(size: CGSize)
 	{
-		//ScrollX = scrollBinding
 		//print("new scene size \(size.width)x\(size.height)")
 		super.init(size:size)
 
-		//anchorPoint.x = ScrollToAnchor(scroll: ScrollX.wrappedValue)
-		anchorPoint.x = ScrollToAnchor(scroll: ScrollX)
-
+		SetViewRangeMin(MinX: ViewMinX)
 	}
+	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -95,7 +97,7 @@ class GameScene: SKScene, ObservableObject
 		anchorPoint.x = NewAnchor
 		//dragStartScreenx = Int(mousePosition.x)
 		//dragStartAnchorX = anchorPoint.x
-		ScrollX = NewScroll
+		ViewMinX = NewScroll
 	}
 
 	
@@ -117,10 +119,9 @@ class GameScene: SKScene, ObservableObject
 		//print("mouseMoved GameScene has \(children.count) children")
 	}
 	
-	func SetScrollX(scroll:Int)
+	func SetViewRangeMin(MinX:Int)
 	{
-		anchorPoint.x = ScrollToAnchor(scroll: scroll)
-		//dirty = !dirty
+		anchorPoint.x = ScrollToAnchor(scroll: MinX)
 	}
 	
 	
@@ -154,8 +155,9 @@ struct DataTimelineView<TrackLabel:View>: View
 	let backgroundColour : Color
 	
 	//	scroll is external to allow the variable to be synchronised
-	@Binding var ScrollX:Int
-
+	@Binding var ViewMinTime:Int
+	@Binding var ViewMaxTime:Int
+	
 	//	has to be last
 	let label: () -> TrackLabel
 
@@ -189,17 +191,24 @@ struct DataTimelineView<TrackLabel:View>: View
 						scene.backgroundColor = NSColor(backgroundColour)
 						scene.PlotPositions(Times: initialPlotTimes, Colour: Color("TimelinePresentationTime"))
 					}
-					.onChange(of: ScrollX)
+					.onChange(of: ViewMinTime)
 					{
 						value in
 						//print("ScrollX changed from above value=\(value) ScrollX=\(ScrollX)")
-						scene.SetScrollX(scroll: value)
+						//	gr: can the scene handle this automatically?
+						scene.SetViewRangeMin(MinX: value)
 					}
-					.onChange(of: scene.ScrollX)
+					.onChange(of: scene.ViewMinX)
 					{
 						value in
 						//print("scene changed")
-						ScrollX = value
+						ViewMinTime = value
+					}
+					.onChange(of: scene.ViewMaxX)
+					{
+						value in
+						//print("scene changed")
+						ViewMaxTime = value
 					}
 			}
 		}

@@ -39,8 +39,8 @@ struct Mp4InstanceView: View
 	var documentUrl : URL
 	@State var selectedAtom: UUID?
 	@State var selectedTrack: UUID?
-	@State var sharedScrollX : Int=1
-	@State var sharedScrollXMax : Int=1000
+	@State var timelineViewTimeMin : Int=0
+	@State var timelineViewTimeMax : Int=1000
 	@State var fourccFilter: String=""
 	
 	//	when we have selected something in the tree, we asynchronously load it here
@@ -204,26 +204,26 @@ struct Mp4InstanceView: View
 			
 			HStack
 			{
-				Label("\(sharedScrollX)-\(sharedScrollXMax)ms", systemImage: "clock.fill")
+				Label("\(timelineViewTimeMin)-\(timelineViewTimeMax)ms", systemImage: "clock.fill")
 					.frame(maxWidth: 100, alignment:.leading)
 					.padding(.all, 6.0)
 					.textSelection(.enabled)
 
 				RangeSlider(
-					viewModel: .init(sliderPosition: sharedScrollX...sharedScrollXMax,
+					viewModel: .init(sliderPosition: timelineViewTimeMin...timelineViewTimeMax,
 												 sliderBounds: TimelineMin...TimelineMax,
 												 sliderMinDifference: 1000
 												),
 					sliderPositionChanged: 
 					{
 						minmax in
-							sharedScrollX = minmax.lowerBound
-							sharedScrollXMax = minmax.upperBound
+						timelineViewTimeMin = minmax.lowerBound
+						timelineViewTimeMax = minmax.upperBound
 					},
 					activeColour:Color.accentColor,
 					inactiveColour:Color(NSColor.controlColor)
 				)
-				.onChange(of: sharedScrollX)
+				.onChange(of: timelineViewTimeMin)
 				{
 					//print("slider on change \(sharedScrollX)")
 				}
@@ -234,7 +234,7 @@ struct Mp4InstanceView: View
 				ForEach(fileDecoder.lastMeta.tracks)
 				{
 					track in
-					TrackView( track:track, ScrollX: $sharedScrollX )
+					TrackView( track:track, ViewMinTime: $timelineViewTimeMin, ViewMaxTime: $timelineViewTimeMax )
 						.contentShape(Rectangle())
 				}
 			}
