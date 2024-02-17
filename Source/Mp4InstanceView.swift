@@ -188,7 +188,7 @@ struct Mp4InstanceView: View
 						 */
 						
 						AtomTree()
-							.frame(maxWidth: .infinity, maxHeight: .infinity)
+							.frame(minWidth:100, maxWidth: .infinity, maxHeight: .infinity)
 						
 						VStack
 						{
@@ -197,7 +197,7 @@ struct Mp4InstanceView: View
 							HexView(input: visibleHexData)
 								.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 						}
-						.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+						.frame(minWidth:100, maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 					}
 				}.frame(width: geometry.size.width, height: geometry.size.height)
 			}
